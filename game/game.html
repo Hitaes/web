@@ -158,7 +158,7 @@
       background: #555;
       border-top: 2px solid #777;
       border-radius: 2px;
-      transform: translateY(-5px);
+      transform: translateY(-200px);
       transition: transform 0.1s linear;
     }
 
@@ -493,44 +493,62 @@
     }
 
     // Printing Logic
-    startBtn.addEventListener('click', () => {
-      if (isPrinting || resinAmount < 100) return;
+    startBtn.addEventListener('click', async () => {
+      if (isPrinting || resinAmount < 20) {
+        hint.innerText = "Potrebujeś viac resinu!";
+        return;
+      }
       
       isPrinting = true;
       startBtn.disabled = true;
-      startBtn.innerText = "Tlačím...";
-      hint.innerText = "Prebieha tlač modelu...";
+      startBtn.innerText = "Klesám...";
+      hint.innerText = "Doska klesá k resinu...";
       led.classList.add('active');
       progressWrap.style.display = 'block';
+
+      // Initial drop
+      plate.style.transition = 'transform 1.5s ease-in-out';
+      plate.style.transform = 'translateY(0px)';
+      await new Promise(r => setTimeout(r, 1600));
+
+      startBtn.innerText = "Tlačím...";
+      hint.innerText = "Prebieha tlač vrstiev...";
+      plate.style.transition = 'none';
       
       let progress = 0;
-      const totalSteps = 200;
+      const totalSteps = 150;
+      const liftMax = 200;
       
       const printInterval = setInterval(() => {
         progress++;
         const percent = (progress / totalSteps) * 100;
         progressFill.style.width = percent + '%';
 
-        // Plate movement simulation
-        const lift = (progress / totalSteps) * 200;
-        plate.style.transform = `translateY(-${lift}px)`;
+        // Peel motion simulation (up and down oscillation)
+        const oscillation = Math.sin(progress * 0.8) * 4; 
+        const linearLift = (progress / totalSteps) * liftMax * -1;
         
-        // Model growth
-        if (progress > 20) {
+        plate.style.transform = `translateY(${linearLift + oscillation}px)`;
+        
+        // Model growth (attached to plate, growing downward or appearing)
+        if (progress > 5) {
           model.style.opacity = '1';
-          model.style.width = Math.min(60, (progress - 20) * 0.5) + 'px';
-          model.style.height = Math.min(100, (progress - 20) * 0.6) + 'px';
+          // Width and height based on progress
+          model.style.width = Math.min(60, (progress) * 0.6) + 'px';
+          model.style.height = Math.min(100, (progress) * 0.7) + 'px';
         }
 
         // Consume resin
-        resinAmount -= 0.1;
-        resinFill.style.height = resinAmount + '%';
+        if (resinAmount > 5) {
+          resinAmount -= 0.15;
+          resinFill.style.height = resinAmount + '%';
+        }
 
         if (progress >= totalSteps) {
           clearInterval(printInterval);
           finishPrint();
         }
-      }, 50);
+      }, 60);
     });
 
     function finishPrint() {
