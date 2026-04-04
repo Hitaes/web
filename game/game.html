@@ -160,6 +160,33 @@
       border-radius: 2px;
       transform: translateY(-200px);
       transition: transform 0.1s linear;
+      z-index: 20;
+    }
+
+    /* The arm connecting plate to pillar */
+    .plate-arm {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 25px;
+      background: #444;
+      border: 1px solid #555;
+      z-index: -1;
+    }
+
+    .plate-arm::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 200px; /* Long enough to reach pillar */
+      background: #333;
+      border: 1px solid #444;
+      z-index: -2;
     }
 
     .z-pillar {
@@ -351,11 +378,49 @@
       color: var(--text);
     }
 
-    footer {
+    .result-popup {
       position: fixed;
-      bottom: 20px;
-      color: #333;
-      font-size: 0.8rem;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      background: var(--panel);
+      padding: 30px;
+      border-radius: var(--radius);
+      border: 1px solid var(--accent);
+      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+      text-align: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .result-popup.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .result-popup h2 {
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+
+    .result-popup .stats {
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    #model.final-ready {
+      cursor: pointer;
+      filter: drop-shadow(0 0 8px var(--accent));
+      transition: 0.3s;
+    }
+
+    #model.final-ready:hover {
+      transform: translateX(-50%) scale(1.1);
     }
   </style>
 </head>
@@ -374,6 +439,7 @@
         <div class="resin-level" id="resin-fill"></div>
       </div>
       <div class="build-plate" id="plate">
+        <div class="plate-arm"></div>
         <div class="printed-model" id="model">
           <svg viewBox="0 0 60 100">
             <!-- Supports forest -->
@@ -418,6 +484,17 @@
   </div>
 
   <a href="../index.html" class="back-btn">← Späť na web</a>
+
+  <div class="result-popup" id="result-popup">
+    <h2>Perfektný výsledok!</h2>
+    <div class="stats">
+      SLA Tlač úspešná ✓<br>
+      Detaily: 100% (8K/12K)<br>
+      Supporty: Odstrániteľné<br>
+      Materiál: Hitaes Resin HD
+    </div>
+    <button class="btn" onclick="location.reload()">Resetovať hru</button>
+  </div>
 
   <footer>Simulation by Hitaes Studio</footer>
 
@@ -589,10 +666,16 @@
     function finishPrint() {
       isPrinting = false;
       led.classList.remove('active');
-      hint.innerText = "Hotovo! Skvelý výsledok.";
+      hint.innerText = "Tlač dokončená! Klikni na stickmena pre výsledok.";
       startBtn.innerText = "Zresetovať";
       startBtn.disabled = false;
       
+      // Make model interactive
+      model.classList.add('final-ready');
+      model.addEventListener('click', () => {
+        document.getElementById('result-popup').classList.add('active');
+      });
+
       startBtn.onclick = () => location.reload();
     }
   </script>
