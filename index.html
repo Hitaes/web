@@ -243,6 +243,12 @@
 
     #nacenenie {
       padding-bottom: 20px;
+      display: flex;
+    }
+
+    .contact-side {
+      display: flex;
+      flex-direction: column;
     }
 
     #proces {
@@ -445,12 +451,19 @@
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
       gap: 28px;
-      align-items: start;
+      align-items: stretch;
+    }
+
+    .contact-info-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
     .contact-list {
       list-style: none;
-      margin-top: 14px;
+      margin-top: auto;
+      padding-top: 14px;
     }
 
     .contact-list li {
@@ -475,8 +488,9 @@
     }
 
     .contact-form-wrap {
-      margin-top: 20px;
+      margin-top: 22px;
       max-width: 100%;
+      height: calc(100% - 22px);
     }
 
     .contact-form {
@@ -485,6 +499,9 @@
       border-radius: 20px;
       padding: 18px;
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
     .form-grid {
