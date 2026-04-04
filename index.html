@@ -455,18 +455,20 @@
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
       gap: 28px;
-      align-items: start;
+      align-items: stretch;
     }
 
     .contact-info-card {
+      height: 100%;
       display: flex;
       flex-direction: column;
+      padding: 15px !important;
     }
 
     .contact-list {
       list-style: none;
-      margin-top: 18px;
-      padding-top: 0;
+      margin-top: auto;
+      padding-top: 10px;
     }
 
     .contact-list li {
@@ -518,14 +520,16 @@
     .contact-form-wrap {
       margin-top: 15px;
       max-width: 100%;
+      height: calc(100% - 15px);
     }
 
     .contact-form {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 20px;
-      padding: 18px;
+      padding: 15px;
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+      height: 100%;
       display: flex;
       flex-direction: column;
     }
@@ -1389,7 +1393,7 @@
               <div class="form-group">
                 <label for="message">Poznámka</label>
                 <p class="small-note" style="margin-bottom: 8px;">Máš 3D model? Nahraj ho na <a href="https://wetransfer.com/" target="_blank" style="color:var(--accent); text-decoration: underline;">WeTransfer</a> / <a href="https://drive.google.com/" target="_blank" style="color:var(--accent); text-decoration: underline;">Google Drive</a> a odkaz vlož sem do poznámky.</p>
-                <textarea id="message" name="Poznámka" rows="4"
+                <textarea id="message" name="Poznámka" rows="3"
                   placeholder="Veľkosť, účel, termín, špeciálne požiadavky..."></textarea>
               </div>
 
