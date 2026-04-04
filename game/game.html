@@ -120,10 +120,12 @@
       bottom: 120px;
       width: 200px;
       height: 35px;
-      background: #2a2a2a;
-      border: 2px solid #3a3a3a;
+      background: #1e1e1e;
+      border: 2px solid #a43f3f; /* Red S4 Ultra Accent */
       border-radius: 4px;
       z-index: 10;
+      transform-origin: left bottom; /* Important for Tilt-Release */
+      transition: transform 0.2s ease;
     }
 
     .resin-level {
@@ -155,38 +157,36 @@
       bottom: 135px;
       width: 170px;
       height: 10px;
-      background: #555;
-      border-top: 2px solid #777;
+      background: #444;
+      border-top: 2px solid #666;
       border-radius: 2px;
       transform: translateY(-200px);
       transition: transform 0.1s linear;
       z-index: 20;
     }
 
-    /* The arm connecting plate to pillar */
-    .plate-arm {
+    .plate-handle {
       position: absolute;
       top: -15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 40px;
+      width: 45px;
       height: 25px;
-      background: #444;
-      border: 1px solid #555;
-      z-index: -1;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 4px;
     }
 
-    .plate-arm::after {
-      content: '';
+    .plate-arm-connector {
       position: absolute;
-      top: 0;
+      top: -5px;
       left: 50%;
       transform: translateX(-50%);
-      width: 20px;
-      height: 200px; /* Long enough to reach pillar */
-      background: #333;
-      border: 1px solid #444;
-      z-index: -2;
+      width: 12px;
+      height: 250px;
+      background: #111;
+      border: 1px solid #222;
+      z-index: -1;
     }
 
     .z-pillar {
@@ -206,8 +206,8 @@
       width: 80px;
       height: 160px;
       cursor: grab;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 50;
+      pointer-events: auto;
     }
 
     .bottle:active {
@@ -435,11 +435,12 @@
     <div class="printer-wrap">
       <div class="z-pillar"></div>
       <div class="cover"></div>
-      <div class="vat-wrap">
+      <div class="vat-wrap" id="vat">
         <div class="resin-level" id="resin-fill"></div>
       </div>
       <div class="build-plate" id="plate">
-        <div class="plate-arm"></div>
+        <div class="plate-handle"></div>
+        <div class="plate-arm-connector"></div>
         <div class="printed-model" id="model">
           <svg viewBox="0 0 60 100">
             <!-- Supports forest -->
@@ -499,7 +500,7 @@
   <footer>Simulation by Hitaes Studio</footer>
 
   <script>
-    const bottle = document.getElementById('bottle');
+    const vat = document.getElementById('vat');
     const resinFill = document.getElementById('resin-fill');
     const startBtn = document.getElementById('start-btn');
     const hint = document.getElementById('hint');
@@ -512,15 +513,30 @@
     let resinAmount = 0;
     let isPouring = false;
     let isPrinting = false;
+    let targetRotation = 0;
+    let currentRotation = 0;
 
-    // Desktop Drag
-    bottle.addEventListener('dragstart', (e) => {
-      e.dataTransfer.setData('text/plain', 'bottle');
-      hint.innerText = "Presuň fľašu nad tlačiareň!";
-    });
+    // Smooth bottle rotation simulation
+    function updatePhysics() {
+      if (dragging) {
+        // Find if we are over the vat
+        const vatRect = vat.getBoundingClientRect();
+        const bottleRect = bottle.getBoundingClientRect();
+        if (bottleRect.bottom > vatRect.top - 80 && bottleRect.top < vatRect.bottom) {
+          targetRotation = -105;
+        } else {
+          targetRotation = 0;
+        }
+      } else {
+        targetRotation = 0;
+      }
 
-    // Handle hover/drop logic over printer
-    const vat = document.querySelector('.vat-wrap');
+      currentRotation += (targetRotation - currentRotation) * 0.15;
+      bottle.style.transform = `rotate(${currentRotation}deg)`;
+      
+      requestAnimationFrame(updatePhysics);
+    }
+    updatePhysics();
 
     // Mobile / Interactive Drag Sim
     let rect = bottle.getBoundingClientRect();
@@ -537,7 +553,7 @@
       bottle.style.zIndex = '1000';
     });
 
-    window.addEventListener('mousemove', (e) => {
+      window.addEventListener('mousemove', (e) => {
       if (!dragging) return;
       
       const x = e.clientX - offX;
@@ -555,7 +571,7 @@
       if (
         bottleRect.right > vatRect.left &&
         bottleRect.left < vatRect.right &&
-        bottleRect.bottom > vatRect.top - 100 &&
+        bottleRect.bottom > vatRect.top - 50 &&
         bottleRect.top < vatRect.bottom
       ) {
         if (!isPouring && resinAmount < 100) {
@@ -570,7 +586,7 @@
       if (!dragging) return;
       dragging = false;
       stopPouring();
-      bottle.style.transition = '0.4s cubic-bezier(0.19, 1, 0.22, 1)';
+      bottle.style.transition = 'left 0.4s cubic-bezier(0.19, 1, 0.22, 1), top 0.4s cubic-bezier(0.19, 1, 0.22, 1)';
       bottle.style.position = 'relative';
       bottle.style.left = '0';
       bottle.style.top = '0';
@@ -635,11 +651,20 @@
         const percent = (progress / totalSteps) * 100;
         progressFill.style.width = percent + '%';
 
-        // Peel motion simulation (up and down oscillation)
-        const oscillation = Math.sin(progress * 0.8) * 4; 
-        const linearLift = (progress / totalSteps) * liftMax * -1;
+        // Peel motion simulation with S4 Ultra Tilt-Release
+        const progressMod = progress % 10;
+        let linearLift = (progress / totalSteps) * liftMax * -1;
         
-        plate.style.transform = `translateY(${linearLift + oscillation}px)`;
+        if (progressMod > 7) {
+            // Tilting / Lifting phase
+            vat.style.transform = 'rotate(-3deg)';
+            linearLift -= 4; // Extra lift during peel
+        } else {
+            // Pressing phase
+            vat.style.transform = 'rotate(0deg)';
+        }
+
+        plate.style.transform = `translateY(${linearLift}px)`;
         
         // Model appearance (revealing layers)
         if (progress > 5) {
