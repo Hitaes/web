@@ -262,15 +262,32 @@
     /* Model Style */
     .printed-model {
       position: absolute;
-      bottom: 0;
+      top: 10px; /* Attach to bottom of build plate */
       left: 50%;
       transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      background: var(--accent);
-      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      width: 60px;
+      height: 100px;
       opacity: 0;
-      transition: all 0.1s linear;
+      transition: opacity 0.3s ease;
+      overflow: visible;
+    }
+
+    .printed-model svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .model-part {
+      stroke: var(--accent);
+      stroke-width: 4;
+      stroke-linecap: round;
+      fill: none;
+    }
+
+    .support {
+      stroke: #666;
+      stroke-width: 1.5;
     }
 
     /* UI Controls */
@@ -357,7 +374,24 @@
         <div class="resin-level" id="resin-fill"></div>
       </div>
       <div class="build-plate" id="plate">
-        <div class="printed-model" id="model"></div>
+        <div class="printed-model" id="model">
+          <svg viewBox="0 0 60 100">
+            <!-- Supports forest -->
+            <line class="support" x1="15" y1="0" x2="25" y2="35" />
+            <line class="support" x1="30" y1="0" x2="30" y2="30" />
+            <line class="support" x1="45" y1="0" x2="35" y2="35" />
+            
+            <!-- Stickman tilted at 45 deg -->
+            <g transform="rotate(-45, 30, 50) translate(0, 5)">
+              <circle cx="30" cy="25" r="7" fill="var(--accent)" stroke="none" />
+              <line class="model-part" x1="30" y1="32" x2="30" y2="60" />
+              <line class="model-part" x1="30" y1="40" x2="15" y2="50" />
+              <line class="model-part" x1="30" y1="40" x2="45" y2="50" />
+              <line class="model-part" x1="30" y1="60" x2="20" y2="80" />
+              <line class="model-part" x1="30" y1="60" x2="40" y2="80" />
+            </g>
+          </svg>
+        </div>
       </div>
       <div class="printer-body">
         <div class="printer-screen">
@@ -530,12 +564,13 @@
         
         plate.style.transform = `translateY(${linearLift + oscillation}px)`;
         
-        // Model growth (attached to plate, growing downward or appearing)
+        // Model appearance (revealing layers)
         if (progress > 5) {
           model.style.opacity = '1';
-          // Width and height based on progress
-          model.style.width = Math.min(60, (progress) * 0.6) + 'px';
-          model.style.height = Math.min(100, (progress) * 0.7) + 'px';
+          // Reveal model by increasing its visual height or clipping
+          // Here we just use opacity and a simple clip-path reveal
+          const revealPercent = Math.min(100, (progress / totalSteps) * 120);
+          model.style.clipPath = `inset(0 0 ${100 - revealPercent}% 0)`;
         }
 
         // Consume resin
