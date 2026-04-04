@@ -82,37 +82,53 @@
       position: relative;
       width: 240px;
       height: 120px;
-      background: #1e1e1e;
-      border: 2px solid #2a2a2a;
+      background: #151515;
+      border: 1px solid #222;
+      border-bottom: 4px solid #a43f3f; /* S4 Ultra red base line */
       border-radius: 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    }
+
+    .printer-body::after {
+      content: 'SATURN 4 ULTRA';
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #a43f3f;
+      font-size: 0.6rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      opacity: 0.8;
     }
 
     .printer-screen {
-      width: 60px;
-      height: 30px;
+      width: 70px;
+      height: 45px;
       background: #050505;
       margin-top: 15px;
       border: 1px solid #333;
       border-radius: 4px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 3px;
     }
 
     .screen-dot {
-      width: 20px;
-      height: 4px;
-      background: #333;
-      border-radius: 2px;
+      width: 40px;
+      height: 2px;
+      background: #1a1a1a;
+      border-radius: 1px;
     }
 
     .screen-dot.active {
-      background: #00ff00;
-      box-shadow: 0 0 8px rgba(0,255,0,0.5);
+      background: #d9a441;
+      box-shadow: 0 0 10px var(--accent);
     }
 
     .vat-wrap {
@@ -513,8 +529,10 @@
     let resinAmount = 0;
     let isPouring = false;
     let isPrinting = false;
+    let dragging = false;
     let targetRotation = 0;
     let currentRotation = 0;
+    let offX, offY;
 
     // Smooth bottle rotation simulation
     function updatePhysics() {
@@ -522,7 +540,12 @@
         // Find if we are over the vat
         const vatRect = vat.getBoundingClientRect();
         const bottleRect = bottle.getBoundingClientRect();
-        if (bottleRect.bottom > vatRect.top - 80 && bottleRect.top < vatRect.bottom) {
+        if (
+            bottleRect.left < vatRect.right && 
+            bottleRect.right > vatRect.left &&
+            bottleRect.bottom > vatRect.top - 100 && 
+            bottleRect.top < vatRect.bottom
+        ) {
           targetRotation = -105;
         } else {
           targetRotation = 0;
@@ -539,9 +562,8 @@
     updatePhysics();
 
     // Mobile / Interactive Drag Sim
-    let rect = bottle.getBoundingClientRect();
-    let dragging = false;
-    let offX, offY;
+    const bottle = document.getElementById('bottle'); // Ensure bottle is defined
+
 
     bottle.addEventListener('mousedown', (e) => {
       if (isPrinting) return;
