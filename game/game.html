@@ -218,17 +218,25 @@
 
     /* Bottle Styles */
     .bottle {
-      position: relative;
+      position: absolute;
+      bottom: 50px;
+      right: 100px;
       width: 80px;
       height: 160px;
-      cursor: grab;
+      cursor: pointer;
       z-index: 50;
-      pointer-events: auto;
+      transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
-    .bottle:active {
-      cursor: grabbing;
-      transform: scale(1.05);
+    .bottle.auto-pouring {
+      right: 48%;
+      bottom: 160px;
+      transform: rotate(-105deg);
+    }
+
+    .bottle:hover:not(.auto-pouring) {
+      transform: scale(1.05) translateY(-5px);
+      filter: drop-shadow(0 0 10px var(--accent-dim));
     }
 
     .bottle-body {
@@ -483,7 +491,7 @@
       </div>
     </div>
 
-    <div class="bottle" id="bottle" draggable="true">
+    <div class="bottle" id="bottle">
       <div class="bottle-cap"></div>
       <div class="bottle-neck"></div>
       <div class="bottle-body">
@@ -525,123 +533,48 @@
     const led = document.getElementById('led');
     const progressWrap = document.getElementById('progress-wrap');
     const progressFill = document.getElementById('progress-fill');
+    const bottle = document.getElementById('bottle');
 
     let resinAmount = 0;
     let isPouring = false;
     let isPrinting = false;
-    let dragging = false;
-    let targetRotation = 0;
-    let currentRotation = 0;
-    let offX, offY;
 
-    // Smooth bottle rotation simulation
-    function updatePhysics() {
-      if (dragging) {
-        // Find if we are over the vat
-        const vatRect = vat.getBoundingClientRect();
-        const bottleRect = bottle.getBoundingClientRect();
-        if (
-            bottleRect.left < vatRect.right && 
-            bottleRect.right > vatRect.left &&
-            bottleRect.bottom > vatRect.top - 100 && 
-            bottleRect.top < vatRect.bottom
-        ) {
-          targetRotation = -105;
-        } else {
-          targetRotation = 0;
-        }
-      } else {
-        targetRotation = 0;
-      }
+    bottle.addEventListener('click', () => {
+      if (isPrinting || isPouring || resinAmount >= 100) return;
 
-      currentRotation += (targetRotation - currentRotation) * 0.15;
-      bottle.style.transform = `rotate(${currentRotation}deg)`;
+      bottle.classList.add('auto-pouring');
+      hint.innerText = "Nalievam resin...";
       
-      requestAnimationFrame(updatePhysics);
-    }
-    updatePhysics();
-
-    // Mobile / Interactive Drag Sim
-    const bottle = document.getElementById('bottle'); // Ensure bottle is defined
-
-
-    bottle.addEventListener('mousedown', (e) => {
-      if (isPrinting) return;
-      dragging = true;
-      const rect = bottle.getBoundingClientRect();
-      offX = e.clientX - rect.left;
-      offY = e.clientY - rect.top;
-      bottle.style.transition = 'none';
-      bottle.style.zIndex = '1000';
-    });
-
-      window.addEventListener('mousemove', (e) => {
-      if (!dragging) return;
-      
-      const x = e.clientX - offX;
-      const y = e.clientY - offY;
-      
-      bottle.style.position = 'fixed';
-      bottle.style.left = x + 'px';
-      bottle.style.top = y + 'px';
-
-      // Check for overlap with vat
-      const vatRect = vat.getBoundingClientRect();
-      const bottleRect = bottle.getBoundingClientRect();
-
-      // Detection box for pouring
-      if (
-        bottleRect.right > vatRect.left &&
-        bottleRect.left < vatRect.right &&
-        bottleRect.bottom > vatRect.top - 50 &&
-        bottleRect.top < vatRect.bottom
-      ) {
-        if (!isPouring && resinAmount < 100) {
-          startPouring();
-        }
-      } else {
-        stopPouring();
-      }
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (!dragging) return;
-      dragging = false;
-      stopPouring();
-      bottle.style.transition = 'left 0.4s cubic-bezier(0.19, 1, 0.22, 1), top 0.4s cubic-bezier(0.19, 1, 0.22, 1)';
-      bottle.style.position = 'relative';
-      bottle.style.left = '0';
-      bottle.style.top = '0';
-      bottle.style.zIndex = '50';
+      setTimeout(() => {
+        startPouring();
+      }, 800);
     });
 
     function startPouring() {
       isPouring = true;
-      bottle.classList.add('pouring');
+      bottle.querySelector('.resin-stream').style.display = 'block';
       pourResin();
     }
 
     function stopPouring() {
       isPouring = false;
-      bottle.classList.remove('pouring');
+      bottle.querySelector('.resin-stream').style.display = 'none';
+      bottle.classList.remove('auto-pouring');
+      hint.innerText = "Plná vaňa! Teraz spusti tlač.";
+      startBtn.disabled = false;
     }
 
     function pourResin() {
-      if (!isPouring || resinAmount >= 100) {
-        if (resinAmount >= 100) {
-          hint.innerText = "Plná vaňa! Teraz spusti tlač.";
-          startBtn.disabled = false;
-        }
+      if (resinAmount >= 100) {
+        stopPouring();
         return;
       }
-
       resinAmount += 1;
       resinFill.style.height = resinAmount + '%';
-      
       setTimeout(pourResin, 30);
     }
 
-    // Printing Logic
+    // Printing Logic (Saturn 4 Ultra Simulation)
     startBtn.addEventListener('click', async () => {
       if (isPrinting || resinAmount < 20) {
         hint.innerText = "Potrebujeś viac resinu!";
