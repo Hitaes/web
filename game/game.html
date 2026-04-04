@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hitaes Resin Clicker | SLA Game</title>
+  <style>
+    :root {
+      --bg: #0d0f13;
+      --panel: #171a21;
+      --accent: #d9a441;
+      --accent-dim: rgba(217, 164, 65, 0.2);
+      --resin: #5a1010;
+      --text: #f2f3f5;
+      --muted: #8e96a3;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      position: absolute;
+      top: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--accent), #f5d97b);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    p.status {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .game-scene {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      height: 500px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 120px;
+      padding-bottom: 50px;
+    }
+
+    /* Printer Styles */
+    .printer-wrap {
+      position: relative;
+      width: 300px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .printer-body {
+      position: relative;
+      width: 240px;
+      height: 120px;
+      background: #1e1e1e;
+      border: 2px solid #2a2a2a;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+
+    .printer-screen {
+      width: 60px;
+      height: 30px;
+      background: #050505;
+      margin-top: 15px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screen-dot {
+      width: 20px;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+    }
+
+    .screen-dot.active {
+      background: #00ff00;
+      box-shadow: 0 0 8px rgba(0,255,0,0.5);
+    }
+
+    .vat-wrap {
+      position: absolute;
+      bottom: 120px;
+      width: 200px;
+      height: 35px;
+      background: #2a2a2a;
+      border: 2px solid #3a3a3a;
+      border-radius: 4px;
+      z-index: 10;
+    }
+
+    .resin-level {
+      position: absolute;
+      bottom: 2px;
+      left: 2px;
+      width: calc(100% - 4px);
+      height: 0%;
+      background: var(--resin);
+      opacity: 0.8;
+      transition: height 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .cover {
+      position: absolute;
+      bottom: 120px;
+      width: 220px;
+      height: 300px;
+      background: rgba(217, 164, 65, 0.15);
+      border: 1px solid rgba(217, 164, 65, 0.3);
+      border-radius: 8px 8px 0 0;
+      backdrop-filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .build-plate {
+      position: absolute;
+      bottom: 135px;
+      width: 170px;
+      height: 10px;
+      background: #555;
+      border-top: 2px solid #777;
+      border-radius: 2px;
+      transform: translateY(-5px);
+      transition: transform 0.1s linear;
+    }
+
+    .z-pillar {
+      position: absolute;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 300px;
+      background: linear-gradient(90deg, #333, #444, #333);
+      z-index: -1;
+    }
+
+    /* Bottle Styles */
+    .bottle {
+      position: relative;
+      width: 80px;
+      height: 160px;
+      cursor: grab;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 50;
+    }
+
+    .bottle:active {
+      cursor: grabbing;
+      transform: scale(1.05);
+    }
+
+    .bottle-body {
+      width: 100%;
+      height: 120px;
+      background: #111;
+      border: 2px solid #222;
+      border-radius: 12px 12px 4px 4px;
+      position: relative;
+    }
+
+    .bottle-label {
+      position: absolute;
+      top: 30px;
+      left: 10%;
+      width: 80%;
+      height: 40px;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .bottle-cap {
+      width: 30px;
+      height: 20px;
+      background: #222;
+      position: absolute;
+      top: -20px;
+      left: 25px;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .bottle-neck {
+      width: 26px;
+      height: 15px;
+      background: #111;
+      position: absolute;
+      top: -15px;
+      left: 27px;
+    }
+
+    /* Pouring Animation */
+    .bottle.pouring {
+      transform: rotate(-100deg) translate(-20px, -40px) !important;
+    }
+
+    .resin-stream {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 6px;
+      height: 100px;
+      background: var(--resin);
+      display: none;
+      filter: blur(1px);
+      box-shadow: 0 0 10px var(--resin);
+    }
+
+    .pouring .resin-stream {
+      display: block;
+      animation: streamFlow 0.5s infinite linear;
+    }
+
+    @keyframes streamFlow {
+      0% { height: 0; transform: translateY(0); }
+      100% { height: 100px; transform: translateY(20px); }
+    }
+
+    /* Model Style */
+    .printed-model {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      background: var(--accent);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      opacity: 0;
+      transition: all 0.1s linear;
+    }
+
+    /* UI Controls */
+    .ui {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border-radius: 30px;
+      border: none;
+      background: var(--panel);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: 0.3s;
+    }
+
+    .btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .progress-bar-wrap {
+      width: 300px;
+      height: 6px;
+      background: #222;
+      border-radius: 3px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.1s linear;
+    }
+
+    .back-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      color: var(--text);
+    }
+
+    footer {
+      position: fixed;
+      bottom: 20px;
+      color: #333;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Hitaes Clicker</h1>
+    <p class="status" id="hint">Chyť fľašu a nalej resin do tlačiarne!</p>
+  </header>
+
+  <div class="game-scene">
+    <div class="printer-wrap">
+      <div class="z-pillar"></div>
+      <div class="cover"></div>
+      <div class="vat-wrap">
+        <div class="resin-level" id="resin-fill"></div>
+      </div>
+      <div class="build-plate" id="plate">
+        <div class="printed-model" id="model"></div>
+      </div>
+      <div class="printer-body">
+        <div class="printer-screen">
+          <div class="screen-dot" id="led"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottle" id="bottle" draggable="true">
+      <div class="bottle-cap"></div>
+      <div class="bottle-neck"></div>
+      <div class="bottle-body">
+        <div class="bottle-label">Hitaes RESIN</div>
+        <div class="resin-stream"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui">
+    <div class="progress-bar-wrap" id="progress-wrap">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+    <button class="btn" id="start-btn" disabled>Spustiť tlač</button>
+  </div>
+
+  <a href="../index.html" class="back-btn">← Späť na web</a>
+
+  <footer>Simulation by Hitaes Studio</footer>
+
+  <script>
+    const bottle = document.getElementById('bottle');
+    const resinFill = document.getElementById('resin-fill');
+    const startBtn = document.getElementById('start-btn');
+    const hint = document.getElementById('hint');
+    const plate = document.getElementById('plate');
+    const model = document.getElementById('model');
+    const led = document.getElementById('led');
+    const progressWrap = document.getElementById('progress-wrap');
+    const progressFill = document.getElementById('progress-fill');
+
+    let resinAmount = 0;
+    let isPouring = false;
+    let isPrinting = false;
+
+    // Desktop Drag
+    bottle.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', 'bottle');
+      hint.innerText = "Presuň fľašu nad tlačiareň!";
+    });
+
+    // Handle hover/drop logic over printer
+    const vat = document.querySelector('.vat-wrap');
+
+    // Mobile / Interactive Drag Sim
+    let rect = bottle.getBoundingClientRect();
+    let dragging = false;
+    let offX, offY;
+
+    bottle.addEventListener('mousedown', (e) => {
+      if (isPrinting) return;
+      dragging = true;
+      const rect = bottle.getBoundingClientRect();
+      offX = e.clientX - rect.left;
+      offY = e.clientY - rect.top;
+      bottle.style.transition = 'none';
+      bottle.style.zIndex = '1000';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      
+      const x = e.clientX - offX;
+      const y = e.clientY - offY;
+      
+      bottle.style.position = 'fixed';
+      bottle.style.left = x + 'px';
+      bottle.style.top = y + 'px';
+
+      // Check for overlap with vat
+      const vatRect = vat.getBoundingClientRect();
+      const bottleRect = bottle.getBoundingClientRect();
+
+      // Detection box for pouring
+      if (
+        bottleRect.right > vatRect.left &&
+        bottleRect.left < vatRect.right &&
+        bottleRect.bottom > vatRect.top - 100 &&
+        bottleRect.top < vatRect.bottom
+      ) {
+        if (!isPouring && resinAmount < 100) {
+          startPouring();
+        }
+      } else {
+        stopPouring();
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging = false;
+      stopPouring();
+      bottle.style.transition = '0.4s cubic-bezier(0.19, 1, 0.22, 1)';
+      bottle.style.position = 'relative';
+      bottle.style.left = '0';
+      bottle.style.top = '0';
+      bottle.style.zIndex = '50';
+    });
+
+    function startPouring() {
+      isPouring = true;
+      bottle.classList.add('pouring');
+      pourResin();
+    }
+
+    function stopPouring() {
+      isPouring = false;
+      bottle.classList.remove('pouring');
+    }
+
+    function pourResin() {
+      if (!isPouring || resinAmount >= 100) {
+        if (resinAmount >= 100) {
+          hint.innerText = "Plná vaňa! Teraz spusti tlač.";
+          startBtn.disabled = false;
+        }
+        return;
+      }
+
+      resinAmount += 1;
+      resinFill.style.height = resinAmount + '%';
+      
+      setTimeout(pourResin, 30);
+    }
+
+    // Printing Logic
+    startBtn.addEventListener('click', () => {
+      if (isPrinting || resinAmount < 100) return;
+      
+      isPrinting = true;
+      startBtn.disabled = true;
+      startBtn.innerText = "Tlačím...";
+      hint.innerText = "Prebieha tlač modelu...";
+      led.classList.add('active');
+      progressWrap.style.display = 'block';
+      
+      let progress = 0;
+      const totalSteps = 200;
+      
+      const printInterval = setInterval(() => {
+        progress++;
+        const percent = (progress / totalSteps) * 100;
+        progressFill.style.width = percent + '%';
+
+        // Plate movement simulation
+        const lift = (progress / totalSteps) * 200;
+        plate.style.transform = `translateY(-${lift}px)`;
+        
+        // Model growth
+        if (progress > 20) {
+          model.style.opacity = '1';
+          model.style.width = Math.min(60, (progress - 20) * 0.5) + 'px';
+          model.style.height = Math.min(100, (progress - 20) * 0.6) + 'px';
+        }
+
+        // Consume resin
+        resinAmount -= 0.1;
+        resinFill.style.height = resinAmount + '%';
+
+        if (progress >= totalSteps) {
+          clearInterval(printInterval);
+          finishPrint();
+        }
+      }, 50);
+    });
+
+    function finishPrint() {
+      isPrinting = false;
+      led.classList.remove('active');
+      hint.innerText = "Hotovo! Skvelý výsledok.";
+      startBtn.innerText = "Zresetovať";
+      startBtn.disabled = false;
+      
+      startBtn.onclick = () => location.reload();
+    }
+  </script>
+</body>
+</html>
