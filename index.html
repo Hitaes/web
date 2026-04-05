@@ -658,6 +658,10 @@
       -ms-overflow-style: none;
       padding: 10px 5px 30px;
       cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
     }
 
     .reviews-slider::-webkit-scrollbar {
@@ -1636,16 +1640,19 @@
     slider.addEventListener('mousedown', (e) => {
       isDown = true;
       slider.classList.add('active');
+      slider.style.scrollSnapType = 'none'; // Disable snap during drag
       startX = e.pageX - slider.offsetLeft;
       scrollLeft = slider.scrollLeft;
     });
     slider.addEventListener('mouseleave', () => {
       isDown = false;
       slider.classList.remove('active');
+      slider.style.scrollSnapType = 'x mandatory'; // Re-enable snap
     });
     slider.addEventListener('mouseup', () => {
       isDown = false;
       slider.classList.remove('active');
+      slider.style.scrollSnapType = 'x mandatory'; // Re-enable snap
     });
     slider.addEventListener('mousemove', (e) => {
       if (!isDown) return;
