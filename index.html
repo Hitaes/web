@@ -854,6 +854,51 @@
       filter: drop-shadow(0 0 6px rgba(240, 196, 107, 0.5));
     }
 
+    .launch-notice {
+      background: rgba(217, 164, 65, 0.05);
+      border: 1px solid rgba(217, 164, 65, 0.3);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 0 auto 50px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      max-width: 900px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .launch-notice-icon {
+      flex: 0 0 48px;
+      height: 48px;
+      background: rgba(217, 164, 65, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-2);
+    }
+
+    .launch-notice-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .launch-notice-content p {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    @media (max-width: 768px) {
+      .launch-notice {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+      }
+    }
+
     .team {
       margin-top: 0;
     }
@@ -1488,7 +1533,7 @@
               <ul class="contact-list">
                 <li><strong>E-mail:</strong>&nbsp;<a href="mailto:hitaes3dstudio@gmail.com">hitaes3dstudio@gmail.com</a>
                 </li>
-                <li><strong>Telefón:</strong>&nbsp;<a href="tel:+421904342570">+421 904 342 570</a></li>
+                <li><strong>Telefón:</strong>&nbsp;<a href=""></a></li>
                 <li><strong>Adresa:</strong>&nbsp;<a href="https://www.google.com/maps/search/?api=1&query=Kosice"
                     target="_blank">Košice</a></li>
                 <li style="display: flex; gap: 18px; align-items: center; padding-top: 12px; margin-top: 10px;">
@@ -1564,17 +1609,31 @@
 
     <section class="team">
       <div class="container">
+        
+        <div class="launch-notice" id="oznam">
+          <div class="launch-notice-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <div class="launch-notice-content">
+            <p><strong>Momentálne pripravujeme spustenie štúdia a dolaďujeme stroje.</strong><br>
+            Ak máš záujem o tlač, nechaj nám tu model a kontakt, a ozveme sa ti s exkluzívnou cenou hneď, ako oficiálne otvoríme.</p>
+          </div>
+        </div>
+
         <h2>Tím za vaším projektom</h2>
 
         <div class="team-grid">
           <div class="team-card">
             <div class="team-person">
               <div class="team-photo-wrap">
-                <img src="mg.png" alt="Michal Gabanyi" class="team-photo">
+                <img src="" alt="" class="team-photo">
               </div>
 
               <div class="team-info">
-                <h3>Michal Gabanyi</h3>
+                <h3></h3>
                 <p class="team-role">SLA / MSLA Expert, maľovanie a post-process</p>
                 <p class="team-desc">
                   Venujem sa detailnej resin tlači, čisteniu modelov a príprave na maľovanie.
@@ -1639,7 +1698,8 @@
 
             <div class="review-card">
               <div class="review-stars">★★★★☆</div>
-              <p class="review-text">"Vygeneroval som si vlastný AI model, v Hitaes Studio mi ho vytlačili precízne a základný náter to vylepšil. Ďakujem!"</p>
+              <p class="review-text">"Vygeneroval som si vlastný AI model, v Hitaes Studio mi ho vytlačili precízne a
+                základný náter to vylepšil. Ďakujem!"</p>
               <div class="review-author">Marek T.</div>
             </div>
 
