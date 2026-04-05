@@ -1631,8 +1631,20 @@
       machineTrack.innerHTML += machineTrack.innerHTML;
     }
 
-    // Reviews Slider Drag functionality
+    // Reviews Slider Drag & Loop functionality
     const slider = document.getElementById('reviewsSlider');
+    
+    // Triple the content for infinite effect
+    if (slider) {
+      const originalContent = slider.innerHTML;
+      slider.innerHTML = originalContent + originalContent + originalContent;
+      
+      // Start in the middle
+      window.addEventListener('load', () => {
+        slider.scrollLeft = slider.scrollWidth / 3;
+      });
+    }
+
     let isDown = false;
     let startX;
     let scrollLeft;
@@ -1641,6 +1653,7 @@
       isDown = true;
       slider.classList.add('active');
       slider.style.scrollSnapType = 'none'; // Disable snap during drag
+      slider.style.scrollBehavior = 'auto'; // Disable smooth scroll during drag
       startX = e.pageX - slider.offsetLeft;
       scrollLeft = slider.scrollLeft;
     });
@@ -1660,6 +1673,29 @@
       const x = e.pageX - slider.offsetLeft;
       const walk = (x - startX) * 2; //scroll-fast
       slider.scrollLeft = scrollLeft - walk;
+    });
+
+    // Infinite Loop check
+    slider.addEventListener('scroll', () => {
+      if (isDown) return; // Don't snap/loop during active drag
+      
+      const oneThird = slider.scrollWidth / 3;
+      if (slider.scrollLeft >= oneThird * 2) {
+        slider.scrollLeft -= oneThird;
+      } else if (slider.scrollLeft <= 0) {
+        slider.scrollLeft += oneThird;
+      }
+    });
+
+    // Re-enable snapping when scroll stops
+    slider.addEventListener('scroll', () => {
+      clearTimeout(slider.scrollTimeout);
+      slider.scrollTimeout = setTimeout(() => {
+        if (!isDown) {
+          slider.style.scrollSnapType = 'x mandatory';
+          slider.style.scrollBehavior = 'smooth';
+        }
+      }, 150);
     });
   </script>
 </body>
