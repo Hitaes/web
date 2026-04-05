@@ -641,6 +641,90 @@
       font-size: 30px;
     }
 
+    /* Recenzie Slider */
+    .reviews-container {
+      position: relative;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .reviews-slider {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 10px 5px 30px;
+      cursor: grab;
+    }
+
+    .reviews-slider::-webkit-scrollbar {
+      display: none;
+    }
+
+    .reviews-slider:active {
+      cursor: grabbing;
+    }
+
+    .review-card {
+      min-width: 320px;
+      max-width: 320px;
+      scroll-snap-align: center;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 24px;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .review-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+    }
+
+    .review-stars {
+      color: var(--accent);
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+
+    .review-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #ccc;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .review-author {
+      font-weight: bold;
+      color: #fff;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .review-author::before {
+      content: "";
+      width: 20px;
+      height: 2px;
+      background: var(--accent);
+      display: inline-block;
+    }
+    
+    @media (max-width: 768px) {
+      .review-card {
+        min-width: 85%;
+      }
+    }
+
     .model-help p {
       color: #aaa;
       font-size: 15px;
@@ -1472,25 +1556,39 @@
           <p>Vaša spokojnosť je našou najväčšou odmenou.</p>
         </div>
 
-        <div class="grid-3">
-          <div class="card">
-            <div class="review-stars">★★★★☆</div>
-            <p>"Hollow Knight: Super kvalita a maľovanie, síce trochu drahšie, ale kvalitné. Ďakujem!"</p>
-            <div style="margin-top: 15px; font-weight: bold; font-size: 0.9rem;">– Igor H.</div>
-          </div>
+        <div class="reviews-container">
+          <div class="reviews-slider" id="reviewsSlider">
+            
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"I sent over a draft of my custom avatar and went for the full painting service. The result is an amazing 32cm figure. Truly outstanding quality, highly recommended!"</p>
+              <div class="review-author">Sam G.</div>
+            </div>
 
-          <div class="card">
-            <div class="review-stars">★★★★★</div>
-            <p>"I sent over a draft of my custom avatar and went for the full painting service. The result is an amazing
-              32cm PLA figure. Truly outstanding quality, highly recommended!"</p>
-            <div style="margin-top: 15px; font-weight: bold; font-size: 0.9rem;">– Sam G.</div>
-          </div>
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"Rýchle dodanie a férová cena, základný náter krásne vytiahol detaily. Post-process bol urobený tak poctivo, že stačilo model len vybaliť a položiť na poličku."</p>
+              <div class="review-author">Peter S.</div>
+            </div>
 
-          <div class="card">
-            <div class="review-stars">★★★★★</div>
-            <p>"Rýchle dodanie a férová cena, základný náter krásne vytiahol detaily. Post-process bol urobený tak
-              poctivo, že stačilo model len vybaliť a položiť na poličku."</p>
-            <div style="margin-top: 15px; font-weight: bold; font-size: 0.9rem;">– Peter S.</div>
+            <div class="review-card">
+              <div class="review-stars">★★★★☆</div>
+              <p class="review-text">"Hollow Knight: Super kvalita a maľovanie, síce trochu drahšie, ale výsledok stojí za každé euro. Rozhodne odporúčam pre náročnejších."</p>
+              <div class="review-author">Igor H.</div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"Profesionálny prístup od začiatku až do konca. Skvelá komunikácia pri výbere mierky a výsledná figurína WoW postavy je proste dokonalá."</p>
+              <div class="review-author">Marek T.</div>
+            </div>
+
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"Maximálna spokojnosť s detailmi na malých 28mm miniatúrach k D&D. Nečakal som, že to bude až také ostré. Určite si ešte objednám."</p>
+              <div class="review-author">Lucia M.</div>
+            </div>
+
           </div>
         </div>
 
@@ -1528,6 +1626,34 @@
     if (machineTrack && window.innerWidth > 768) {
       machineTrack.innerHTML += machineTrack.innerHTML;
     }
+
+    // Reviews Slider Drag functionality
+    const slider = document.getElementById('reviewsSlider');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slider.classList.add('active');
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 2; //scroll-fast
+      slider.scrollLeft = scrollLeft - walk;
+    });
   </script>
 </body>
 
