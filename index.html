@@ -652,7 +652,6 @@
       display: flex;
       gap: 20px;
       overflow-x: auto;
-      scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       scrollbar-width: none;
       -ms-overflow-style: none;
@@ -675,7 +674,6 @@
     .review-card {
       min-width: 320px;
       max-width: 320px;
-      scroll-snap-align: center;
       flex-shrink: 0;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
@@ -1652,7 +1650,6 @@
     slider.addEventListener('mousedown', (e) => {
       isDown = true;
       slider.classList.add('active');
-      slider.style.scrollSnapType = 'none'; // Disable snap during drag
       slider.style.scrollBehavior = 'auto'; // Disable smooth scroll during drag
       startX = e.pageX - slider.offsetLeft;
       scrollLeft = slider.scrollLeft;
@@ -1660,12 +1657,10 @@
     slider.addEventListener('mouseleave', () => {
       isDown = false;
       slider.classList.remove('active');
-      slider.style.scrollSnapType = 'x mandatory'; // Re-enable snap
     });
     slider.addEventListener('mouseup', () => {
       isDown = false;
       slider.classList.remove('active');
-      slider.style.scrollSnapType = 'x mandatory'; // Re-enable snap
     });
     slider.addEventListener('mousemove', (e) => {
       if (!isDown) return;
@@ -1687,12 +1682,11 @@
       }
     });
 
-    // Re-enable snapping when scroll stops
+    // Re-enable smooth scroll but NO snapping
     slider.addEventListener('scroll', () => {
       clearTimeout(slider.scrollTimeout);
       slider.scrollTimeout = setTimeout(() => {
         if (!isDown) {
-          slider.style.scrollSnapType = 'x mandatory';
           slider.style.scrollBehavior = 'smooth';
         }
       }, 150);
