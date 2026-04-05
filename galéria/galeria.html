@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galéria | Hitaes Studio</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --bg-2: #171a21;
+      --card: #1d212b;
+      --text: #f2f3f5;
+      --muted: #b0b7c3;
+      --line: #2a3040;
+      --accent: #d9a441;
+      --accent-2: #f0c46b;
+      --max: 1200px;
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at center, #1a1f27 0%, #0d0f13 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    /* Topbar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 17, 21, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .brand span {
+      background: linear-gradient(90deg, #d4af37, #f5d97b);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    /* Gallery Hero */
+    .gallery-hero {
+      padding: 80px 0 40px;
+      text-align: center;
+    }
+
+    .gallery-hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 12px;
+      background: linear-gradient(to bottom, #fff, #999);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    .section-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    /* Gallery Grid - Exhibition Room */
+    .gallery-section {
+      padding: 40px 0 100px;
+      perspective: 1200px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 80px 40px;
+    }
+
+    .exhibition-piece {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .gallery-item {
+      position: relative;
+      background: #050505;
+      padding: 18px; /* The Frame Effect */
+      border: 1px solid #1a1a1a;
+      box-shadow: 
+        0 20px 40px -10px rgba(0,0,0,0.8),
+        inset 0 0 0 1px rgba(217, 164, 65, 0.15);
+      transition: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* Inner frame border */
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(217, 164, 65, 0.08);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-12px) rotateX(3deg);
+      border-color: var(--accent);
+      box-shadow: 
+        0 40px 80px -20px rgba(0,0,0,0.95),
+        inset 0 0 0 1px rgba(217, 164, 65, 0.5);
+    }
+
+    /* Virtual Spotlight */
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 120px;
+      background: radial-gradient(ellipse at bottom, rgba(217, 164, 65, 0.15), transparent 75%);
+      opacity: 0.2;
+      transition: 0.6s;
+      pointer-events: none;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 0.8;
+      height: 180px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85) contrast(1.1);
+      transition: 0.6s;
+    }
+
+    .gallery-item:hover img {
+      filter: brightness(1.05) contrast(1);
+    }
+
+    /* Museum Plaque */
+    .plaque {
+      margin-top: 25px;
+      text-align: center;
+      width: 100%;
+      max-width: 200px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    .plaque h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .technique {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .piece-description {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.4;
+      max-width: 260px;
+      margin: 0 auto;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.98);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      cursor: zoom-out;
+      backdrop-filter: blur(8px);
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border: 6px solid #111;
+      box-shadow: 0 0 60px rgba(0,0,0,0.8);
+      animation: zoomIn 0.3s ease-out;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 3rem;
+      color: #fff;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: 0.3s;
+    }
+
+    .lightbox-close:hover {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      padding: 80px 0;
+      border-top: 1px solid var(--line);
+      background: #0a0c10;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-hero h1 { font-size: 2.5rem; }
+      .gallery-grid { gap: 50px 20px; }
+      .gallery-item { padding: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="../index.html" class="brand">
+        <img src="../logo.svg" alt="logo" style="height: 28px;">
+        Hitaes <span>Studio</span>
+      </a>
+      <nav class="nav">
+        <a href="../index.html#top">Domov</a>
+        <a href="../index.html#sluzby">Služby</a>
+        <a href="../index.html#ukazky">Ukážky</a>
+        <a href="../index.html#nacenenie">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="gallery-hero">
+      <span class="section-label">Virtuálna Výstava</span>
+      <h1>Hitaes Gallery</h1>
+      <p>Kolekcia našich najlepších prác. Od precízne maľovaných miniatúr po limitované zberateľské kúsky.</p>
+    </section>
+
+    <section class="gallery-section">
+      <div class="gallery-grid">
+        
+        <!-- Piece 1 -->
+        <div class="exhibition-piece">
+          <div class="gallery-item" onclick="openLightbox('artillery witch.jpg')">
+            <img src="artillery witch.jpg" alt="Artillery Witch">
+          </div>
+          <div class="plaque">
+            <h4>Artillery Witch</h4>
+            <span class="technique">Ručná maľba / Detailná miniatúra</span>
+            <p class="piece-description">Precízna práca so zameraním na detaily zbroje a atmosférické tieňovanie.</p>
+          </div>
+        </div>
+        
+        <!-- Piece 2 -->
+        <div class="exhibition-piece">
+          <div class="gallery-item" onclick="openLightbox('death guard lord of contagion.jpeg')">
+            <img src="death guard lord of contagion.jpeg" alt="Lord of Contagion">
+          </div>
+          <div class="plaque">
+            <h4>Lord of Contagion</h4>
+            <span class="technique">Death Guard / Warhammer 40k</span>
+            <p class="piece-description">Hnilobné efekty, hrdza a autentický vzhľad služobníkov Nurgleho.</p>
+          </div>
+        </div>
+
+        <!-- Piece 3 -->
+        <div class="exhibition-piece">
+          <div class="gallery-item" onclick="openLightbox('death guard plague marine champion.jpeg')">
+            <img src="death guard plague marine champion.jpeg" alt="Plague Marine">
+          </div>
+          <div class="plaque">
+            <h4>Plague Marine Champion</h4>
+            <span class="technique">Hand Painted / Battle Ready</span>
+            <p class="piece-description">Šampión morovej légie s dôrazom na detaily zbraní a organický rast.</p>
+          </div>
+        </div>
+
+        <!-- Piece 4 -->
+        <div class="exhibition-piece">
+          <div class="gallery-item" onclick="openLightbox('hinata rnr321.png')">
+            <img src="hinata rnr321.png" alt="Hinata">
+          </div>
+          <div class="plaque">
+            <h4>Hinata Shoyo</h4>
+            <span class="technique">3D Tlač & Akryl / Anime Style</span>
+            <p class="piece-description">Energické farby a čistý anime štýl pre zberateľskú sochu.</p>
+          </div>
+        </div>
+
+        <!-- Piece 5 -->
+        <div class="exhibition-piece">
+          <div class="gallery-item" onclick="openLightbox('hollowknight.png')">
+            <img src="hollowknight.png" alt="Hollow Knight">
+          </div>
+          <div class="plaque">
+            <h4>Hollow Knight</h4>
+            <span class="technique">SLA Print / Matte Finish</span>
+            <p class="piece-description">Temná elegancia a čistota línií pre fanúšikov hry.</p>
+          </div>
+        </div>
+
+        <!-- Piece 6 -->
+        <div class="exhibition-piece">
+          <div class="gallery-item" onclick="openLightbox('stormcast castigator.jpeg')">
+            <img src="stormcast castigator.jpeg" alt="Stormcast">
+          </div>
+          <div class="plaque">
+            <h4>Stormcast Castigator</h4>
+            <span class="technique">Warhammer Age of Sigmar</span>
+            <p class="piece-description">Zlatá zbroj a čisté metalické odlesky pre nebeských bojovníkov.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Hitaes Studio. Umenie zachytené v detailoch.</p>
+    </div>
+  </footer>
+
+  <script>
+    function openLightbox(src) {
+      const lb = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      img.src = src;
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+  </script>
+</body>
+
+</html>
