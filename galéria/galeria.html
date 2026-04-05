@@ -43,13 +43,12 @@
       margin: 0 auto;
     }
 
-    /* Topbar */
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 50;
       backdrop-filter: blur(10px);
-      background: rgba(15, 17, 21, 0.85);
+      background: rgba(15, 17, 21, 0.78);
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
@@ -57,21 +56,28 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
       padding: 16px 0;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      font-size: 1.15rem;
       font-weight: 700;
-      font-size: 1.2rem;
+      letter-spacing: -0.2px;
+    }
+
+    .brand img {
+      height: 28px;
+      filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.4));
     }
 
     .brand span {
       background: linear-gradient(90deg, #d4af37, #f5d97b);
-      -webkit-background-clip: text;
       background-clip: text;
+      -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -98,6 +104,16 @@
       .nav a.nav-contact {
         padding: 5px 10px;
       }
+    }
+
+    .nav a:not(.nav-contact) {
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    .nav a:not(.nav-contact):hover {
+      color: var(--text);
     }
 
     .nav a.nav-contact {
@@ -330,9 +346,11 @@
         Hitaes <span>Studio</span>
       </a>
       <nav class="nav">
-        <a href="../index.html#top">Domov</a>
+        <a href="../index.html#top">Úvod</a>
         <a href="../index.html#sluzby">Služby</a>
         <a href="../index.html#ukazky">Ukážky</a>
+        <a href="galeria.html" style="color: var(--accent-2); font-weight: 600;">Galéria</a>
+        <a href="../index.html#cennik">Cenník</a>
         <a href="../index.html#nacenenie" class="nav-contact">Kontakt</a>
       </nav>
     </div>
