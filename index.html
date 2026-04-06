@@ -959,16 +959,16 @@
       animation: identity-reveal 6s infinite;
       pointer-events: none;
       filter: blur(0.5px);
-      transform-origin: left center; /* Fixed the alignment issue */
-      text-align: left;
+      /* Resetting alignment to allow for a dirty glitch look */
+      left: 4px;
     }
 
     @keyframes identity-reveal {
       0%, 48.5%, 50.1%, 100% { 
-        opacity: 0; transform: scale(1); 
+        opacity: 0; transform: scale(1) translate(0); 
       }
       49%, 50% { 
-        opacity: 0.9; transform: scale(1.05) skew(10deg); 
+        opacity: 0.9; transform: scale(1.05) skew(12deg) translate(2px); 
       }
     }
 
@@ -1806,7 +1806,7 @@
               </div>
 
               <div class="team-info">
-                <h3 data-text="Hitaes">Hitaes<span class="identity">ERROR 404</span></h3>
+                <h3 data-text="Hitaes">Hitaes<span class="identity">ERROR</span></h3>
                 <p class="team-role">SLA / MSLA Expert, maľovanie a post-process</p>
                 <p class="team-desc">
                   Venujem sa detailnej resin tlači, čisteniu modelov a príprave na maľovanie.
