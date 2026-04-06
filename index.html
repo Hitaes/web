@@ -1030,79 +1030,17 @@
       flex-shrink: 0;
     }
 
-    /* Calmer Photo Glitch Layers */
-    .team-photo-wrap::before,
-    .team-photo-wrap::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-size: cover;
-      background-position: center top;
-      opacity: 0;
-      z-index: 1;
-    }
-
-    .team-card:nth-child(1) .team-photo-wrap::before,
-    .team-card:nth-child(1) .team-photo-wrap::after {
-      background-image: url('mgc.png');
-    }
-
-    .team-card:nth-child(2) .team-photo-wrap::before,
-    .team-card:nth-child(2) .team-photo-wrap::after {
-      background-image: url('mhc.png');
-    }
-
-    .team-photo-wrap::before {
-      animation: photo-chaos-1 3s infinite linear;
-      opacity: 0;
-      mix-blend-mode: color-dodge;
-    }
-
-    .team-photo-wrap::after {
-      animation: photo-chaos-2 4s infinite linear;
-      opacity: 0;
-      mix-blend-mode: color-burn;
-    }
-
-    @keyframes photo-chaos-1 {
-      0%, 90%, 100% { transform: translate(0); opacity: 0; }
-      91% { transform: translate(-2px, 1px) skewX(2deg); opacity: 0.4; }
-      93% { transform: translate(0); opacity: 0; }
-      95% { transform: translate(2px, -1px); opacity: 0.4; }
-    }
-
-    @keyframes photo-chaos-2 {
-      0%, 85%, 100% { transform: translate(0); opacity: 0; }
-      86% { transform: translate(2px, -1px); opacity: 0.3; }
-      88% { transform: translate(0); opacity: 0; }
-      92% { transform: translate(-2px, 1px) skewY(2deg); opacity: 0.3; }
-    }
-
     .team-photo {
-      width: 120px;
-      height: 150px;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       object-position: center top;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.03);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      display: block;
     }
-
     .team-info {
       display: flex;
       flex-direction: column;
       justify-content: center;
-    }
-
-    .team-info h3 {
-      margin: 0 0 6px 0;
-      font-weight: 600;
-      font-size: 28px;
-      line-height: 1.1;
     }
 
     .team-role {
