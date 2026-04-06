@@ -956,40 +956,120 @@
       z-index: 2;
       animation: identity-reveal 6s infinite;
       pointer-events: none;
-      filter: blur(1px); /* Slight blur even when flickering */
+      filter: blur(1px);
+      /* Slight blur even when flickering */
     }
 
     @keyframes identity-reveal {
-      0%, 48.9%, 49.3%, 100% { opacity: 0; transform: scale(1); }
-      49%, 49.2% { opacity: 0.9; transform: scale(1.05) skew(10deg); }
+
+      0%,
+      48.9%,
+      49.3%,
+      100% {
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      49%,
+      49.2% {
+        opacity: 0.9;
+        transform: scale(1.05) skew(10deg);
+      }
     }
 
     @keyframes main-flicker {
-      0%, 100% { opacity: 1; transform: skew(0); }
-      1% { opacity: 0.4; transform: skew(2deg); }
-      2% { opacity: 1; transform: skew(0); }
-      30% { transform: skew(0); }
-      31% { transform: skew(-5deg) scaleY(1.1); }
-      32% { transform: skew(0); }
-      80% { opacity: 1; }
-      81% { opacity: 0; }
-      82% { opacity: 1; }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: skew(0);
+      }
+
+      1% {
+        opacity: 0.4;
+        transform: skew(2deg);
+      }
+
+      2% {
+        opacity: 1;
+        transform: skew(0);
+      }
+
+      30% {
+        transform: skew(0);
+      }
+
+      31% {
+        transform: skew(-5deg) scaleY(1.1);
+      }
+
+      32% {
+        transform: skew(0);
+      }
+
+      80% {
+        opacity: 1;
+      }
+
+      81% {
+        opacity: 0;
+      }
+
+      82% {
+        opacity: 1;
+      }
     }
 
     @keyframes glitch-flicker-1 {
-      0% { transform: translate(0); clip-path: inset(0 0 0 0); }
-      25% { transform: translate(-3px, 2px); clip-path: inset(10% 0 40% 0); }
-      50% { transform: translate(3px, -2px); clip-path: inset(50% 0 10% 0); }
-      75% { transform: translate(-2px, -2px); clip-path: inset(80% 0 0 0); }
-      100% { transform: translate(0); }
+      0% {
+        transform: translate(0);
+        clip-path: inset(0 0 0 0);
+      }
+
+      25% {
+        transform: translate(-3px, 2px);
+        clip-path: inset(10% 0 40% 0);
+      }
+
+      50% {
+        transform: translate(3px, -2px);
+        clip-path: inset(50% 0 10% 0);
+      }
+
+      75% {
+        transform: translate(-2px, -2px);
+        clip-path: inset(80% 0 0 0);
+      }
+
+      100% {
+        transform: translate(0);
+      }
     }
 
     @keyframes glitch-flicker-2 {
-      0% { transform: translate(0); clip-path: inset(0 0 0 0); }
-      20% { transform: translate(3px, -2px); clip-path: inset(20% 0 60% 0); }
-      40% { transform: translate(-3px, 2px); clip-path: inset(70% 0 5% 0); }
-      60% { transform: translate(2px, 2px); clip-path: inset(0 0 80% 0); }
-      100% { transform: translate(0); }
+      0% {
+        transform: translate(0);
+        clip-path: inset(0 0 0 0);
+      }
+
+      20% {
+        transform: translate(3px, -2px);
+        clip-path: inset(20% 0 60% 0);
+      }
+
+      40% {
+        transform: translate(-3px, 2px);
+        clip-path: inset(70% 0 5% 0);
+      }
+
+      60% {
+        transform: translate(2px, 2px);
+        clip-path: inset(0 0 80% 0);
+      }
+
+      100% {
+        transform: translate(0);
+      }
     }
 
     .team-grid {
@@ -1036,7 +1116,27 @@
       object-fit: cover;
       object-position: center top;
       display: block;
+      filter: grayscale(0.6) blur(1.5px) contrast(1.2); /* Anonymizing filter */
+      transition: filter 0.3s ease;
     }
+
+    .team-photo-wrap::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyAQMAAAAk8RryAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP/AOW3MEoAAAAQSURBVAjXY2hgYGBgYGCgAQAEEQB99m89LwAAAABJRU5ErkJggg=='); /* Tiny noise pattern */
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .team-card:hover .team-photo {
+      filter: grayscale(0.2) blur(0px) contrast(1.1); /* Slightly cleaner on hover but still protected */
+    }
+
     .team-info {
       display: flex;
       flex-direction: column;
@@ -1712,7 +1812,7 @@
               </div>
 
               <div class="team-info">
-                <h3 data-text="Hitaes">Hitaes<span class="identity">M. Gabanyi</span></h3>
+                <h3 data-text="Hitaes">Hitaes<span class="identity">SLA Expert</span></h3>
                 <p class="team-role">SLA / MSLA Expert, maľovanie a post-process</p>
                 <p class="team-desc">
                   Venujem sa detailnej resin tlači, čisteniu modelov a príprave na maľovanie.
@@ -1730,7 +1830,7 @@
               </div>
 
               <div class="team-info">
-                <h3 data-text="Miso">Miso<span class="identity">M. Hudák</span></h3>
+                <h3 data-text="Miso">Miso<span class="identity">FDM Expert</span></h3>
                 <p class="team-role">FDM Expert, 3D modelovanie a web design</p>
                 <p class="team-desc">
                   Mám za sebou 25 rokov skúseností v 3D aj 2D grafike.
