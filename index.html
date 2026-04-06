@@ -944,6 +944,26 @@
       animation: glitch-flicker-2 0.3s infinite;
     }
 
+    /* Secret Real Name Layer (Identity Flicker) */
+    .team-info h3 .identity {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: var(--accent-2);
+      opacity: 0;
+      z-index: 2;
+      animation: identity-reveal 6s infinite;
+      pointer-events: none;
+      filter: blur(1px); /* Slight blur even when flickering */
+    }
+
+    @keyframes identity-reveal {
+      0%, 48.9%, 49.3%, 100% { opacity: 0; transform: scale(1); }
+      49%, 49.2% { opacity: 0.9; transform: scale(1.05) skew(10deg); }
+    }
+
     @keyframes main-flicker {
       0%, 100% { opacity: 1; transform: skew(0); }
       1% { opacity: 0.4; transform: skew(2deg); }
@@ -1700,7 +1720,7 @@
               </div>
 
               <div class="team-info">
-                <h3 data-text="Hitaes">Hitaes</h3>
+                <h3 data-text="Hitaes">Hitaes<span class="identity">M. Gabanyi</span></h3>
                 <p class="team-role">SLA / MSLA Expert, maľovanie a post-process</p>
                 <p class="team-desc">
                   Venujem sa detailnej resin tlači, čisteniu modelov a príprave na maľovanie.
@@ -1718,7 +1738,7 @@
               </div>
 
               <div class="team-info">
-                <h3 data-text="Miso">Miso</h3>
+                <h3 data-text="Miso">Miso<span class="identity">M. Hudák</span></h3>
                 <p class="team-role">FDM Expert, 3D modelovanie a web design</p>
                 <p class="team-desc">
                   Mám za sebou 25 rokov skúseností v 3D aj 2D grafike.
