@@ -6,12 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hitaes Studio | SLA 3D tlač a maľovanie</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    /* =========================================
+       1. VARIABLES & GLOBALS
+       ========================================= */
     :root {
       --bg: #0f1115;
       --bg-2: #171a21;
@@ -27,12 +24,15 @@
       --shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
     }
 
-    html {
-      scroll-behavior: smooth;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-margin-top: 31px;
     }
 
-    * {
-      scroll-margin-top: 31px;
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -59,6 +59,9 @@
       margin: 0 auto;
     }
 
+    /* =========================================
+       2. TOPBAR & NAVIGATION
+       ========================================= */
     .topbar {
       position: sticky;
       top: 0;
@@ -104,6 +107,29 @@
       flex-wrap: wrap;
     }
 
+    .nav a:not(.btn) {
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    .nav a:not(.btn):hover {
+      color: var(--text);
+    }
+
+    .nav a.nav-contact {
+      color: var(--accent-2);
+      font-weight: 600;
+      border: 1px solid rgba(240, 196, 107, 0.4);
+      padding: 6px 14px;
+      border-radius: 8px;
+    }
+
+    .nav a.nav-contact:hover {
+      background: rgba(240, 196, 107, 0.1);
+    }
+
+    /* Mobile Topbar */
     @media (max-width: 768px) {
       .topbar-inner {
         flex-direction: column;
@@ -136,28 +162,9 @@
       }
     }
 
-    .nav a:not(.btn) {
-      color: var(--muted);
-      font-size: 0.95rem;
-      transition: 0.2s;
-    }
-
-    .nav a:not(.btn):hover {
-      color: var(--text);
-    }
-
-    .nav a.nav-contact {
-      color: var(--accent-2);
-      font-weight: 600;
-      border: 1px solid rgba(240, 196, 107, 0.4);
-      padding: 6px 14px;
-      border-radius: 8px;
-    }
-
-    .nav a.nav-contact:hover {
-      background: rgba(240, 196, 107, 0.1);
-    }
-
+    /* =========================================
+       3. BUTTONS & UI COMPONENTS
+       ========================================= */
     .btn {
       display: inline-block;
       padding: 14px 22px;
@@ -187,6 +194,37 @@
       background: rgba(255, 255, 255, 0.05);
     }
 
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      height: 100%;
+    }
+
+    .section-title {
+      margin-bottom: 24px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    /* =========================================
+       4. PAGE SECTIONS (HERO, SERVICES)
+       ========================================= */
+    section {
+      padding: 42px 0;
+    }
+
+    /* Hero Section */
     .hero {
       padding: 40px 0 48px;
     }
@@ -262,103 +300,42 @@
       border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
-    .hero-proof {
-      margin-top: 15px;
-      color: #888;
-      font-size: 14px;
-      opacity: 0.9;
+    /* Sliders & Grids */
+    .machines-slider {
+      overflow: hidden;
+      margin-top: 24px;
     }
 
-    section {
-      padding: 42px 0;
-    }
-
-    #nacenenie {
-      padding-bottom: 10px;
+    .machines-track {
       display: flex;
-    }
-
-    .contact-side {
-      display: flex;
-      flex-direction: column;
-    }
-
-    #proces {
-      padding-top: 20px;
-      padding-bottom: 20px;
-    }
-
-    .section-title {
-      margin-bottom: 8px;
-    }
-
-    .section-title h2 {
-      margin-top: 0;
-    }
-
-    .review-stars {
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-size: 1.1rem;
-    }
-
-    .section-title h2 {
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
-      margin-bottom: 10px;
-    }
-
-    .section-title p {
-      color: var(--muted);
-      max-width: 720px;
-    }
-
-    .grid-3,
-    .grid-4 {
-      display: grid;
       gap: 20px;
+      animation: scroll 40s linear infinite;
+      width: max-content;
     }
 
-    .grid-3 {
-      grid-template-columns: repeat(3, 1fr);
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
-    .grid-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .card {
+    .machine-card {
+      min-width: 250px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: var(--shadow);
-      height: 100%;
+      border-radius: 18px;
+      padding: 15px;
+      text-align: center;
     }
 
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 1.15rem;
+    .machine-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
     }
 
-    .card p {
-      color: var(--muted);
-      font-size: 0.97rem;
-    }
-
-    .step-num {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      background: var(--accent);
-      color: #151515;
-      border-radius: 50%;
-      font-weight: 800;
-      margin-bottom: 16px;
-      font-size: 15px;
-    }
-
+    /* Gallery Section */
     .gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -384,35 +361,14 @@
       aspect-ratio: 4 / 5;
       object-fit: cover;
       border-radius: 12px;
-      transform: scale(1);
       transition: transform 0.4s ease, transform-origin 0.4s ease;
-    }
-
-    .gallery-item:nth-child(2) img {
-      object-fit: contain;
-      background: radial-gradient(circle, #1e293b, #020617);
     }
 
     .gallery-item:hover img {
       transform: scale(1.2);
     }
 
-    .gallery-item:not(:has(img)) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #64748b;
-      font-size: 14px;
-      border: 1px dashed rgba(255, 255, 255, 0.1);
-      aspect-ratio: 4 / 5;
-      padding: 20px;
-    }
-
-    .gallery-item:nth-child(n+7) {
-      display: none;
-    }
-
+    /* Pricing Section */
     .price-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -443,21 +399,10 @@
       color: var(--accent-2);
     }
 
-    .price-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-    }
-
     .price {
       font-size: 2rem;
       font-weight: 800;
       margin-bottom: 14px;
-    }
-
-    .price small {
-      font-size: 0.95rem;
-      color: var(--muted);
-      font-weight: 400;
     }
 
     .price-card ul {
@@ -471,181 +416,7 @@
       border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .about-box {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .note {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-top: 14px;
-    }
-
-    .contact-box {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 28px;
-      align-items: stretch;
-    }
-
-    .contact-info-card {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      padding: 15px !important;
-    }
-
-    .contact-list {
-      list-style: none;
-      margin-top: 0;
-      padding-top: 0;
-    }
-
-    .contact-list li {
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-    }
-
-    .contact-list a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .contact-list a:hover {
-      color: var(--accent);
-    }
-
-    .contact-list li:last-child {
-      border-bottom: none;
-      padding-top: 4px;
-    }
-
-    .contact-instagram {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.2s;
-      color: #8e96a3;
-    }
-
-    .social-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      color: var(--accent);
-    }
-
-    .social-link:hover {
-      transform: scale(1.2);
-      color: #fff;
-    }
-
-    .social-icon {
-      width: 26px;
-      height: 26px;
-      filter: drop-shadow(0 0 8px rgba(217, 164, 65, 0));
-      transition: filter 0.3s ease;
-    }
-
-    .social-link:hover .social-icon {
-      filter: drop-shadow(0 0 12px rgba(217, 164, 65, 0.5));
-    }
-
-    .footer {
-      padding: 26px 0 40px;
-      color: #8e96a3;
-      font-size: 0.92rem;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 20px;
-    }
-
-    .contact-form-wrap {
-      margin-top: 15px;
-      max-width: 100%;
-      height: calc(100% - 15px);
-    }
-
-    .contact-form {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 20px;
-      padding: 15px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .form-group {
-      margin-bottom: 12px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: #f2f3f5;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid #2a3040;
-      background: #11151d;
-      color: #f2f3f5;
-      font-size: 15px;
-      outline: none;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: #d9a441;
-      box-shadow: 0 0 0 3px rgba(217, 164, 65, 0.12);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .form-group input[type="file"] {
-      padding: 10px;
-      background: #11151d;
-      border: 1px dashed #2a3040;
-      border-radius: 12px;
-      color: #8e96a3;
-      cursor: pointer;
-    }
-
-    .form-group input[type="file"]:hover {
-      border-color: #d9a441;
-    }
-
+    /* Model Help Banner */
     .model-help {
       margin: 10px 0 42px;
       padding: 28px;
@@ -661,417 +432,160 @@
       align-items: center;
     }
 
-    .model-help-text p {
-      color: #aaa;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .model-help-image {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     .model-help-image img {
       width: 100%;
-      max-width: 100%;
       height: 320px;
       border-radius: 14px;
-      display: block;
+      object-fit: cover;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     }
 
-    .model-help h3 {
-      margin-bottom: 12px;
-      font-size: 30px;
+    .model-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
     }
 
-    /* Form Status Messaging */
+    .model-links a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    .model-links a:hover {
+      background: rgba(240, 196, 107, 0.1);
+      border-color: var(--accent);
+    }
+
+    .platform-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* =========================================
+       5. CONTACT & FORMS
+       ========================================= */
+    .contact-box {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+    }
+
+    .contact-info-card .contact-list {
+      list-style: none;
+    }
+
+    .contact-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-form {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      padding: 24px;
+      height: 100%;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #11151d;
+      color: var(--text);
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: var(--accent);
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: var(--accent);
+    }
+
+    .social-link:hover {
+      transform: scale(1.2);
+      color: #fff;
+    }
+
+    .social-icon { width: 26px; height: 26px; }
+
+    /* Form Status */
     .form-status {
       margin-top: 15px;
       padding: 12px;
       border-radius: 8px;
       display: none;
-      font-size: 0.9rem;
       text-align: center;
     }
 
-    .form-status.success {
-      display: block;
-      background: rgba(40, 167, 69, 0.1);
-      color: #28a745;
-      border: 1px solid rgba(40, 167, 69, 0.2);
-    }
+    .form-status.success { display: block; background: rgba(40, 167, 69, 0.1); color: #28a745; }
+    .form-status.error { display: block; background: rgba(220, 53, 69, 0.1); color: #dc3545; }
 
-    .form-status.error {
-      display: block;
-      background: rgba(220, 53, 69, 0.1);
-      color: #dc3545;
-      border: 1px solid rgba(220, 53, 69, 0.2);
-    }
-
-    .form-loading {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    /* Recenzie Slider */
-    .reviews-container {
-      position: relative;
-      overflow: hidden;
-      margin-top: 10px;
-    }
-
-    .reviews-slider {
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      padding: 10px 5px 30px;
-      cursor: grab;
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-    }
-
-    .reviews-slider::-webkit-scrollbar {
-      display: none;
-    }
-
-    .reviews-slider:active {
-      cursor: grabbing;
-    }
-
-    .review-card {
-      min-width: 320px;
-      max-width: 320px;
-      flex-shrink: 0;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 18px;
-      padding: 24px;
-      transition: transform 0.3s ease, border-color 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .review-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-5px);
-    }
-
-    .review-stars {
-      color: var(--accent);
-      margin-bottom: 15px;
-      font-size: 1.1rem;
-    }
-
-    .review-text {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #ccc;
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-
-    .review-author {
-      font-weight: bold;
-      color: #fff;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .review-author::before {
-      content: "";
-      width: 20px;
-      height: 2px;
-      background: var(--accent);
-      display: inline-block;
-    }
-
-    @media (max-width: 768px) {
-      .review-card {
-        min-width: 85%;
-      }
-    }
-
-    .model-help p {
-      color: #aaa;
-      font-size: 15px;
-      margin-bottom: 18px;
-    }
-
-    .model-help-image img:hover {
-      transform: scale(1.02);
-      transition: 0.3s ease;
-    }
-
-    .model-links {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .model-links a {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      text-decoration: none;
-      color: #cbd5e1;
-      font-size: 13px;
-      transition: background 0.25s ease, color 0.25s ease, text-shadow 0.25s ease;
-    }
-
-    .platform-icon {
-      width: 18px;
-      height: 18px;
-      display: inline-block;
-      flex-shrink: 0;
-      opacity: 0.8;
-      color: currentColor;
-      transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease, color 0.25s ease;
-    }
-
-    .model-links a:hover {
-      background: rgba(240, 196, 107, 0.15);
-      color: #f0c46b;
-      text-shadow: 0 0 6px rgba(240, 196, 107, 0.35);
-    }
-
-    .model-links a:hover .platform-icon {
-      opacity: 1;
-      transform: scale(1.12);
-      filter: drop-shadow(0 0 6px rgba(240, 196, 107, 0.5));
-    }
-
+    /* =========================================
+       6. SPECIALS (LAUNCH NOTICE & TEAM GLITCH)
+       ========================================= */
+    
+    /* Launch Notice Box */
     .launch-notice {
       background: rgba(217, 164, 65, 0.05);
       border: 1px solid rgba(217, 164, 65, 0.3);
       border-radius: var(--radius);
       padding: 24px;
-      margin: 0 auto 50px;
+      margin: 50px auto;
       display: flex;
       align-items: center;
       gap: 20px;
       max-width: 900px;
-      position: relative;
-      overflow: hidden;
     }
 
     .launch-notice-icon {
-      flex: 0 0 48px;
-      height: 48px;
+      flex: 0 0 48px; height: 48px;
       background: rgba(217, 164, 65, 0.15);
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       color: var(--accent-2);
     }
 
-    .launch-notice-icon svg {
-      width: 24px;
-      height: 24px;
-    }
+    .launch-notice-icon svg { width: 24px; height: 24px; }
 
-    .launch-notice-content p {
-      margin: 0;
-      font-size: 1.05rem;
-      line-height: 1.5;
-      color: var(--text);
-    }
-
-    @media (max-width: 768px) {
-      .launch-notice {
-        flex-direction: column;
-        text-align: center;
-        padding: 20px;
-      }
-    }
-
-    #recenzie {
-      display: none;
-    }
-
-    .team .container>h2 {
-      margin-bottom: 22px;
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
-    }
-
-    /* High-Energy Digital Decode Flicker */
-    .team-info h3 {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--text);
-      position: relative;
-      display: inline-block;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
-      animation: main-flicker 4s infinite;
-    }
-
-    .team-info h3::before,
-    .team-info h3::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.8;
-    }
-
-    .team-info h3::before {
-      color: #00fff9;
-      z-index: -1;
-      animation: glitch-flicker-1 0.4s infinite;
-    }
-
-    .team-info h3::after {
-      color: #ff00c1;
-      z-index: -2;
-      animation: glitch-flicker-2 0.3s infinite;
-    }
-
-    /* Secret Real Name Layer (Identity Flicker) */
-    .team-info h3 .identity {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      color: var(--accent-2);
-      opacity: 0;
-      z-index: 2;
-      animation: identity-reveal 6s infinite;
-      pointer-events: none;
-      filter: blur(1px);
-      /* Slight blur even when flickering */
-    }
-
-    @keyframes identity-reveal {
-
-      0%,
-      48.9%,
-      49.3%,
-      100% {
-        opacity: 0;
-        transform: scale(1);
-      }
-
-      49%,
-      49.2% {
-        opacity: 0.9;
-        transform: scale(1.05) skew(10deg);
-      }
-    }
-
-    @keyframes main-flicker {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: skew(0);
-      }
-
-      1% {
-        opacity: 0.4;
-        transform: skew(2deg);
-      }
-
-      2% {
-        opacity: 1;
-        transform: skew(0);
-      }
-
-      30% {
-        transform: skew(0);
-      }
-
-      31% {
-        transform: skew(-5deg) scaleY(1.1);
-      }
-
-      32% {
-        transform: skew(0);
-      }
-
-      80% {
-        opacity: 1;
-      }
-
-      81% {
-        opacity: 0;
-      }
-
-      82% {
-        opacity: 1;
-      }
-    }
-
-    @keyframes glitch-flicker-1 {
-      0% {
-        transform: translate(0);
-        clip-path: inset(0 0 0 0);
-      }
-
-      25% {
-        transform: translate(-3px, 2px);
-        clip-path: inset(10% 0 40% 0);
-      }
-
-      50% {
-        transform: translate(3px, -2px);
-        clip-path: inset(50% 0 10% 0);
-      }
-
-      75% {
-        transform: translate(-2px, -2px);
-        clip-path: inset(80% 0 0 0);
-      }
-
-      100% {
-        transform: translate(0);
-      }
-    }
-
-    @keyframes glitch-flicker-2 {
-      0% {
-        transform: translate(0);
-        clip-path: inset(0 0 0 0);
-      }
-
-      20% {
-        transform: translate(3px, -2px);
-        clip-path: inset(20% 0 60% 0);
-      }
-
-      40% {
-        transform: translate(-3px, 2px);
-        clip-path: inset(70% 0 5% 0);
-      }
-
-      60% {
-        transform: translate(2px, 2px);
-        clip-path: inset(0 0 80% 0);
-      }
-
-      100% {
-        transform: translate(0);
-      }
-    }
-
+    /* Team Section & Anonymization */
     .team-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1082,28 +596,16 @@
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.02));
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 22px;
-      height: 100%;
       padding: 28px;
-      box-shadow: var(--shadow);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      transition: transform 0.25s ease;
     }
 
-    .team-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(240, 196, 107, 0.3);
-      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.3);
-    }
+    .team-card:hover { transform: translateY(-4px); border-color: rgba(240, 196, 107, 0.3); }
 
-    .team-person {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      height: 100%;
-    }
+    .team-person { display: flex; align-items: center; gap: 20px; }
 
     .team-photo-wrap {
-      width: 120px;
-      height: 150px;
+      width: 120px; height: 150px;
       position: relative;
       border-radius: 12px;
       overflow: hidden;
@@ -1111,732 +613,320 @@
     }
 
     .team-photo {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center top;
-      display: block;
-      filter: grayscale(0.6) blur(1.5px) contrast(1.2); /* Anonymizing filter */
+      filter: grayscale(0.6) blur(1.5px) contrast(1.2);
       transition: filter 0.3s ease;
     }
 
+    /* Noise Layer on Photo */
     .team-photo-wrap::after {
       content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyAQMAAAAk8RryAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP/AOW3MEoAAAAQSURBVAjXY2hgYGBgYGCgAQAEEQB99m89LwAAAABJRU5ErkJggg=='); /* Tiny noise pattern */
-      opacity: 0.15;
-      pointer-events: none;
-      z-index: 2;
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyAQMAAAAk8RryAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP/AOW3MEoAAAAQSURBVAjXY2hgYGBgYGCgAQAEEQB99m89LwAAAABJRU5ErkJggg==');
+      opacity: 0.15; z-index: 2; pointer-events: none;
     }
 
-    .team-card:hover .team-photo {
-      filter: grayscale(0.2) blur(0px) contrast(1.1); /* Slightly cleaner on hover but still protected */
-    }
+    .team-card:hover .team-photo { filter: grayscale(0.2) blur(0px) contrast(1.1); }
 
-    .team-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .team-role {
-      margin: 0 0 14px 0;
-      color: var(--accent-2);
-      font-size: 0.95rem;
-      font-weight: 700;
-    }
-
-    .team-desc {
-      margin: 0 0 18px 0;
-      color: rgba(255, 255, 255, 0.85);
-      line-height: 1.7;
-      max-width: 720px;
-    }
-
-    .contact-side {
-      max-width: 420px;
-    }
-
-    .contact-info-card {
-      margin-top: 20px;
-    }
-
-    .contact-info-card p {
-      color: var(--muted);
-      margin-bottom: 14px;
-      font-size: 0.98rem;
-    }
-
-    .contact-info-card .contact-list {
-      margin-top: 0;
-    }
-
-    .contact-info-card .contact-list li strong {
+    /* Digital Flicker for Expert Labels */
+    .team-info h3 {
+      font-size: 1.4rem; font-weight: 800;
       color: var(--text);
+      position: relative;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      animation: main-flicker 4s infinite;
+    }
+
+    .team-info h3::before, .team-info h3::after {
+      content: attr(data-text);
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0.8;
+    }
+
+    .team-info h3::before { color: #00fff9; z-index: -1; animation: glitch-flicker-1 0.4s infinite; }
+    .team-info h3::after { color: #ff00c1; z-index: -2; animation: glitch-flicker-2 0.3s infinite; }
+
+    .team-info h3 .identity {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      color: var(--accent-2); opacity: 0;
+      animation: identity-reveal 6s infinite;
+      filter: blur(1px);
+    }
+
+    @keyframes identity-reveal {
+      0%, 48.9%, 49.3%, 100% { opacity: 0; transform: scale(1); }
+      49%, 49.2% { opacity: 0.9; transform: scale(1.05) skew(10deg); }
+    }
+
+    @keyframes main-flicker {
+      0%, 100% { opacity: 1; transform: skew(0); }
+      1% { opacity: 0.4; transform: skew(2deg); }
+      30% { transform: skew(0); }
+      31% { transform: skew(-5deg); }
+      80% { opacity: 1; }
+      81% { opacity: 0; }
+      82% { opacity: 1; }
+    }
+
+    @keyframes glitch-flicker-1 {
+      0% { clip-path: inset(10% 0 40% 0); transform: translate(-3px, 2px); }
+      50% { clip-path: inset(50% 0 10% 0); transform: translate(3px, -2px); }
+      100% { clip-path: inset(10% 0 40% 0); }
+    }
+
+    @keyframes glitch-flicker-2 {
+      0% { clip-path: inset(20% 0 60% 0); transform: translate(3px, -2px); }
+      50% { clip-path: inset(70% 0 5% 0); transform: translate(-3px, 2px); }
+      100% { clip-path: inset(20% 0 60% 0); }
+    }
+
+    /* Reviews Section (Hidden) */
+    #recenzie { display: none; }
+
+    /* =========================================
+       7. FOOTER & UTILS
+       ========================================= */
+    .footer { padding: 26px 0 40px; color: #8e96a3; font-size: 0.92rem; }
+    .footer-inner {
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 20px;
     }
 
     @media (max-width: 980px) {
-
-      .hero-grid,
-      .about-box,
-      .contact-box,
-      .grid-3,
-      .grid-4,
-      .gallery,
-      .price-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .team-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .team-card {
-        min-height: unset;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: 48px;
-      }
-
-      .topbar-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .nav {
-        width: 100%;
-      }
+      .hero-grid, .about-box, .contact-box, .grid-3, .grid-4, .gallery, .price-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
     }
-
+    
     @media (max-width: 768px) {
-      .model-help-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .team-person {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .team-info {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .team-desc {
-        max-width: 100%;
-        margin-bottom: 0;
-      }
+      .team-person { flex-direction: column; text-align: center; }
+      .launch-notice { flex-direction: column; text-align: center; }
     }
 
-
-    .machines {
-      margin-top: 28px;
-      overflow: hidden;
-    }
-
-    .machines h3 {
-      margin-bottom: 14px;
-    }
-
-    .machines-slider {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-    }
-
-    .machines-track {
-      display: flex;
-      gap: 18px;
-      width: max-content;
-      animation: machinesLoop 50s linear infinite;
-    }
-
-    .machine-card {
-      flex: 0 0 160px;
-      border-radius: 14px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: 0.25s ease;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: rgba(255, 255, 255, 0.03);
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .machine-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .machine-card p {
-      padding: 10px;
-      font-size: 14px;
-      color: #aaa;
-      line-height: 1.4;
-    }
-
-    .machine-card:hover {
-      border: 1px solid #f0c674;
-      box-shadow: 0 0 20px rgba(240, 198, 116, 0.25);
-      transform: translateY(-3px);
-    }
-
-    @keyframes machinesLoop {
-      from {
-        transform: translateX(0);
-      }
-
-      to {
-        transform: translateX(calc(-50% - 9px));
-      }
-    }
-
-    @media (max-width: 768px) {
-      .machines-slider {
-        overflow-x: auto;
-        mask-image: none;
-        -webkit-mask-image: none;
-        padding-bottom: 6px;
-      }
-
-      .machines-track {
-        animation: none;
-        width: max-content;
-        gap: 12px;
-      }
-
-      .machine-card {
-        flex: 0 0 140px;
-      }
-    }
-
-    .small-note {
-      font-size: 0.85rem;
-      opacity: 0.7;
-    }
   </style>
 </head>
 
-<body id="top">
+<body>
 
+  <!-- Navigation -->
   <header class="topbar">
     <div class="container topbar-inner">
-      <a href="#top" class="brand">
-        <img src="logo.svg" alt="logo">
-        Hitaes <span>Studio</span>
+      <a href="index.html" class="brand">
+        <img src="logo.png" alt="Hitaes Studio Logo">
+        <span>Hitaes Studio</span>
       </a>
-
       <nav class="nav">
-        <a href="#top">Úvod</a>
+        <a href="#nacenenie">Úvod</a>
         <a href="#sluzby">Služby</a>
         <a href="#ukazky">Ukážky</a>
-        <a href="galéria/galeria.html" style="color: var(--accent-2); font-weight: 600;">Galéria</a>
+        <a href="galéria/galeria.html">Galéria</a>
         <a href="#cennik">Cenník</a>
-        <a href="#nacenenie" class="nav-contact">Kontakt</a>
+        <a href="#kontakt" class="nav-contact">Kontakt</a>
       </nav>
     </div>
   </header>
 
   <main>
+    
+    <!-- Hero Section -->
     <section class="hero">
       <div class="container hero-grid">
-        <div>
-          <div class="eyebrow">Detailná SLA / MSLA resin tlač v Košiciach</div>
-          <h1>Detailná 3D tlač modelov, ktoré obstoja aj zblízka.</h1>
+        <div class="hero-text">
+          <div class="eyebrow">Daj svojim digitálnym modelom fyzickú podobu</div>
+          <h1>Od 3D modelu k výstavnému kusu</h1>
           <p>
-            Figúrky, busty, zberateľské modely a zákazková výroba s dôrazom na detail,
-            čistý povrch a poctivý post-process. Vhodné na vystavenie, ako darček…
-            alebo aj na ničenie doskových svetov.
+            Vdýchneme život tvojim hrdinom, potvorám aj súčiastkam. 
+            Precízna SLA tlač a maľovanie, ktoré posúva hranice detailu.
           </p>
-          Získaj cenovú ponuku do 24 hodín
-          • bezplatné nacenenie
-          • bez záväzkov
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#nacenenie">Chcem nezáväzne naceniť model</a>
-            <a class="btn btn-secondary" href="#ukazky">Pozrieť ukážky</a>
-          </div>
-
-          <p class="hero-proof">
-            12K SLA tlač • precízny post-process • pripravené na maľovanie
-          </p>
-
-          <div class="mini-points">
-            <span>Vysoký detail</span>
-            <span>Príprava na maľovanie</span>
-            <span>Individuálny prístup</span>
+            <a href="#nacenenie" class="btn btn-primary">Naceniť projekt</a>
+            <a href="galéria/galeria.html" class="btn btn-secondary">Prezrieť galériu</a>
           </div>
         </div>
-
         <div class="hero-card">
           <div class="hero-image">
-            <img src="prev.png" alt="3D tlač modelu">
+            <img src="banner.png" alt="Ukážka 3D tlače">
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Services / Machines -->
     <section id="sluzby">
       <div class="container">
         <div class="section-title">
-          <h2>Čo ponúkame</h2>
-          <p>
-            Nielen samotnú tlač, ale aj doladenie výstupu tak, aby model pôsobil čisto
-            a reprezentatívne. Rozumieme technickým dielam, tabletop hrám a modelom – vieme, čo robí dobrú figúrku.
-          </p>
+          <h2>Naša technológia</h2>
+          <p class="tag">Používame najmodernejšie stroje pre dosiahnutie maximálnej presnosti.</p>
         </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <h3>SLA / MSLA tlač</h3>
-            <p>
-              Detailná resin tlač figúrok, postáv, búst a zberateľských modelov s dôrazom
-              na ostré črty a čistý povrch.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Čistenie a post-process</h3>
-            <p>
-              Odstránenie supportov, základné začistenie a úpravy povrchu podľa typu modelu
-              a požadovanej úrovne finishu.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Maľovanie modelov</h3>
-            <p>
-              Možnosť dohody na maľovaní modelu alebo prezentovateľnej úprave podľa štýlu,
-              ktorý chceš dosiahnuť.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>FDM tlač</h3>
-            <p>
-              Výroba väčších, funkčných alebo technických dielov pomocou FDM tlače.
-              Vhodné na prototypy, praktické súčiastky a pevnejšie modely.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>3D modelovanie</h3>
-            <p>
-              Návrh a modelovanie technických dielov aj rôznych 3D modelov podľa zadania.
-              Dôraz na funkčnosť, presnosť a pripravenosť na výrobu.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Technické zázemie a Weby</h3>
-            <p>
-              Tvoj projekt nemusí končiť len pri fyzickom modeli. Poskytujeme IT podporu a tvorbu jednoduchých
-              prezentačných webov pre tvorcov, projekty a startupy.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="ukazky">
-      <div class="container">
-        <div class="section-title">
-          <h2>Ukážky práce</h2>
-        </div>
-
-        <div class="gallery">
-          <div class="gallery-item"><img src="busta.png" alt="3D tlač modelu"></div>
-          <div class="gallery-item"><img src="mman.jpg" alt="3D tlač modelu"></div>
-          <div class="gallery-item"><img src="teren.png" alt="3D tlač modelu"></div>
-          <div class="gallery-item"><img src="trench.png" alt="3D tlač modelu"></div>
-          <div class="gallery-item"><img src="hollowknight.png" alt="3D tlač modelu"></div>
-          <div class="gallery-item"><img src="hinata.png" alt="3D tlač modelu"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="o-mne">
-      <div class="container">
-        <div class="section-title">
-          <h2>Prečo Hitaes Studio</h2>
-          <p>
-            Nejde len o to model vytlačiť. Ide o to, aby po vytlačení aj dobre vyzeral.
-          </p>
-        </div>
-
-        <div class="about-box">
-          <div class="card">
-            <h3>Dôraz na detail</h3>
-            <p>
-              Pri resin tlači rozhodujú drobnosti. Supporty, čistenie, cure a finálny povrch
-              spravia väčší rozdiel než samotné číslo tlačiarne.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3>Poctivý prístup</h3>
-            <p>
-              Keď je na modeli chyba, ktorá bije do očí, riešime ju. Cieľ nie je len “nejako to vytlačiť”,
-              ale odovzdať kus, ktorý bude robiť dobrý dojem.
-            </p>
-          </div>
-        </div>
-
-        <div class="machines">
-          <h3>Naše stroje</h3>
-          <p class="tag">Používame najmodernejšie technológie pre dosiahnutie najlepších výsledkov.</p>
-
-          <div class="machines-slider">
-            <div class="machines-track">
-              <div class="machine-card">
-                <img src="m5.jpg" alt="SLA tlačiareň">
-                <p>SLA – Elegoo Mars 5 Ultra 8K</p>
-              </div>
-
-              <div class="machine-card">
-                <img src="s4.jpg" alt="SLA tlačiareň">
-                <p>2x SLA – Elegoo Saturn 4 Ultra 12K</p>
-              </div>
-
-              <div class="machine-card">
-                <img src="k2.jpg" alt="FDM tlačiareň">
-                <p>2x FDM – Creality K2 Plus</p>
-              </div>
-
-              <div class="machine-card">
-                <img src="b1.jpg" alt="FDM tlačiareň">
-                <p>2x FDM – Bamboo Lab P1S combo</p>
-              </div>
-
-              <div class="machine-card">
-                <img src="b2.jpg" alt="FDM tlačiareň">
-                <p>FDM – Bamboo Lab P2S combo</p>
-              </div>
-
-              <div class="machine-card">
-                <img src="pm.jpg" alt="FDM tlačiareň">
-                <p>FDM – Prusa mini +</p>
-              </div>
-
-              <div class="machine-card">
-                <img src="l.jpg" alt="Laser">
-                <p>Elegoo Laser Engraver & Cutter 20W +</p>
-              </div>
+        <div class="machines-slider">
+          <div class="machines-track">
+            <div class="machine-card">
+              <img src="m5.jpg" alt="Elegoo Mars 5 Ultra">
+              <p>SLA – Elegoo Mars 5 Ultra 8K</p>
+            </div>
+            <div class="machine-card">
+              <img src="s4.jpg" alt="Elegoo Saturn 4 Ultra">
+              <p>2x SLA – Elegoo Saturn 4 Ultra 12K</p>
+            </div>
+            <div class="machine-card">
+              <img src="k2.jpg" alt="Creality K2 Plus">
+              <p>2x FDM – Creality K2 Plus</p>
+            </div>
+            <div class="machine-card">
+              <img src="b1.jpg" alt="Bamboo Lab P1S">
+              <p>2x FDM – Bamboo Lab P1S combo</p>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
+    <!-- Pricing Section -->
     <section id="cennik">
       <div class="container">
         <div class="section-title">
           <h2>Orientačný cenník</h2>
-          <p>
-            Presná cena závisí od veľkosti, náročnosti modelu, spotreby materiálu a úrovne
-            začistenia. Tu je len rýchla orientácia.
-          </p>
+          <p>Ceny sú závislé od veľkosti a materiálu. Tu je základná orientácia.</p>
         </div>
-
         <div class="price-grid">
           <div class="price-card">
-            <div class="tag">Wargaming & DnD</div>
-            <h3>Herné miniatúry a Bitsy (do 7 cm)</h3>
+            <div class="tag">Wargaming</div>
+            <h3>Miniatúry (do 7 cm)</h3>
             <div class="price">od 7 €</div>
-            <ul>
-              <li>Ideálne pre wargaming, DnD a tabletop</li>
-              <li>Vysoký detail zbraní, textúr a tvárí</li>
-              <li>Možnosť tlače celých oddielov (dohoda)</li>
-            </ul>
+            <ul><li>Ideálne pre DnD a Tabletop</li><li>SLA tlač s vysokým detailom</li></ul>
           </div>
-
           <div class="price-card featured">
-            <div class="tag">Darčeky & Zberatelia</div>
-            <h3>Zberateľské modely a Busty (8 – 15 cm)</h3>
+            <div class="tag">Zberateľské</div>
+            <h3>Busty (8 - 15 cm)</h3>
             <div class="price">od 35 €</div>
-            <ul>
-              <li>Vhodné na vystavenie alebo ako originálny darček</li>
-              <li>Väčší objem a precízne začistenie povrchu</li>
-              <li>Pripravené na tvoje vlastné farbenie</li>
-            </ul>
+            <ul><li>Pripravené na maľovanie</li><li>Post-process v cene</li></ul>
           </div>
-
           <div class="price-card">
             <div class="tag">Individuálne</div>
-            <h3>Individuálne zákazky a FDM</h3>
+            <h3>Functional & FDM</h3>
             <div class="price">dohodou</div>
-            <ul>
-              <li>Nadrozmerné modely a súčiastky</li>
-              <li>Kompletné diorámy a špecifické požiadavky</li>
-              <li>FDM tlač pre pevnosť a rozmer</li>
-            </ul>
+            <ul><li>Technické súčiastky</li><li>Veľkoformátová tlač</li></ul>
           </div>
         </div>
-
-        <p class="note">
-          Ceny sú orientačné. Presnú cenovú ponuku pripravíme po zaslaní modelu alebo referenčného obrázka.
-          *Maľovanie prijímame len v obmedzenom počte objednávok.
-        </p>
-
-        <div style="margin-top: 28px;">
-          <a class="btn btn-primary" href="#nacenenie">Chcem nezáväzne naceniť model</a>
-        </div>
+        <p class="note">*Maľovanie prijímame len v obmedzenom počte objednávok.</p>
       </div>
     </section>
 
-    <section id="proces">
-      <div class="container">
-        <div class="section-title">
-          <h2>Ako to funguje</h2>
-          <p>Jednoduchý proces od prvého nápadu až po hotový model u teba doma.</p>
-        </div>
-
-        <div class="grid-4">
-          <div class="card">
-            <div class="step-num">1</div>
-            <h3>Výber a zadanie</h3>
-            <p>Pošleš nám svoj model, fotku alebo link (napr. z Thingiverse alebo MyMiniFactory).</p>
-          </div>
-
-          <div class="card">
-            <div class="step-num">2</div>
-            <h3>Rýchle nacenenie</h3>
-            <p>Do 24 hodín ti pošleme presnú sumu a preberieme detaily – veľkosť, materiál a úroveň čistenia.</p>
-          </div>
-
-          <div class="card">
-            <div class="step-num">3</div>
-            <h3>Tlač a post-process</h3>
-            <p>Model vytlačíme na našich SLA/FDM strojoch a poctivo ho začistíme od supportov.</p>
-          </div>
-
-          <div class="card">
-            <div class="step-num">4</div>
-            <h3>Dodanie</h3>
-            <p>Bezpečne ho zabalíme a pošleme priamo k tebe, pripravený na maľovanie alebo vystavenie.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Model Selection Help -->
     <div class="container">
-      <div class="model-help" id="model-help">
+      <div class="model-help">
         <div class="model-help-grid">
           <div class="model-help-text">
-            <h3>Nemáš vlastný model?</h3>
-            <p>
-              Vyber si z tisícok modelov a pošli nám link.
-              O tlač aj úpravu sa postaráme.
-            </p>
-            <p class="small-note">Ak model zabezpečujeme my, jeho cena sa započíta do finálnej ceny.
-              (v niektorých prípadoch aj výhodnejšie než bežne dostupné ceny)
-            </p>
-
+            <h3>Nemáš vlastný 3D model?</h3>
+            <p>Vyber si na platformách a pošli nám link. O všetko ostatné sa postaráme.</p>
             <div class="model-links">
-              <a href="https://www.myminifactory.com/" target="_blank">
-                <svg viewBox="0 0 24 24" class="platform-icon">
-                  <polygon points="12,2 20,7 20,17 12,22 4,17 4,7" fill="none" stroke="currentColor"
-                    stroke-width="1.5" />
-                  <path d="M8 14V10L10 12L12 10L14 12L16 10V14" fill="none" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                MyMiniFactory
-              </a>
-
-              <a href="https://cults3d.com/" target="_blank">
-                <svg viewBox="0 0 24 24" class="platform-icon">
-                  <path d="M12 4c3 0 5 2 5 4s-2 4-5 4-5 2-5 4 2 4 5 4" fill="none" stroke="currentColor"
-                    stroke-width="1.5" />
-                </svg>
-                Cults3D
-              </a>
-
-              <a href="https://www.thingiverse.com/" target="_blank">
-                <svg viewBox="0 0 24 24" class="platform-icon">
-                  <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.5" />
-                  <path d="M8 8h8M12 8v8" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                Thingiverse
-              </a>
-
-              <a href="https://www.printables.com/" target="_blank">
-                <svg viewBox="0 0 24 24" class="platform-icon">
-                  <polygon points="12,3 20,8 12,13 4,8" fill="none" stroke="currentColor" stroke-width="1.5" />
-                  <polygon points="4,8 12,13 12,21 4,16" fill="none" stroke="currentColor" stroke-width="1.5" />
-                  <polygon points="20,8 12,13 12,21 20,16" fill="none" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                Printables
-              </a>
+              <a href="https://www.myminifactory.com/" target="_blank">MyMiniFactory</a>
+              <a href="https://cults3d.com/" target="_blank">Cults3D</a>
+              <a href="https://www.thingiverse.com/" target="_blank">Thingiverse</a>
             </div>
           </div>
-
           <div class="model-help-image">
-            <img src="banner2.png" alt="3D tlač modelu">
+            <img src="banner2.png" alt="3D model help">
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Contact & Valuation -->
     <section id="nacenenie">
       <div class="container">
         <div class="contact-box">
           <div class="contact-side">
             <div class="section-title">
               <h2>Rýchle nacenenie</h2>
-              <p>
-                Pošli základné info o modeli a ozvem sa ti s cenou a možnosťami výroby.
-              </p>
+              <p>Daj nám vedieť čo potrebuješ a napíšeme ti cenu do 24 hodín.</p>
             </div>
-
-            <div class="card contact-info-card" id="kontakt" style="margin-top: 0;">
-              <h3 style="margin-bottom: 8px;">Priamy kontakt</h3>
-              <p style="margin-bottom: 0;">
-                Ak nerád vypĺňaš formuláre, pokojne nám napíš priamo na e-mail alebo cez Instagram.
-              </p>
+            <div class="card contact-info-card" id="kontakt">
+              <h3>Priamy kontakt</h3>
+              <p>Neváhaj nám napísať priamo na Gmail alebo sociálne siete.</p>
               <ul class="contact-list">
-                <li><strong>E-mail:</strong>&nbsp;<a href="mailto:hitaes3dstudio@gmail.com">hitaes3dstudio@gmail.com</a>
-                </li>
-                <li><strong>Telefón:</strong>&nbsp;<a href=""></a></li>
-                <li><strong>Adresa:</strong>&nbsp;<a href="https://www.google.com/maps/search/?api=1&query=Kosice"
-                    target="_blank">Košice</a></li>
-                <li style="display: flex; gap: 18px; align-items: center; padding-top: 12px; margin-top: 10px;">
-                  <span class="social-link" style="cursor: default; opacity: 0.3;" title="Facebook (pripravujeme)">
-                    <svg viewBox="0 0 24 24" class="social-icon">
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" fill="none"
-                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </span>
-                  <a href="https://instagram.com/hitaes3dstudio" target="_blank" class="social-link" title="Instagram">
-                    <svg viewBox="0 0 24 24" class="social-icon">
-                      <rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor"
-                        stroke-width="1.5" />
-                      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5" />
-                      <circle cx="17" cy="7" r="1.2" fill="currentColor" />
-                    </svg>
-                  </a>
-                  <a href="https://www.tiktok.com/@hitaes3dstudio" target="_blank" class="social-link" title="TikTok">
-                    <svg viewBox="0 0 24 24" class="social-icon">
-                      <path d="M9 12a4 4 0 1 0 4 4V4h5a4 4 0 0 0-4 4" fill="none" stroke="currentColor"
-                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </a>
-                </li>
+                <li><strong>E-mail:</strong>&nbsp;<a href="mailto:hitaes3dstudio@gmail.com">hitaes3dstudio@gmail.com</a></li>
+                <li><strong>Telefón:</strong>&nbsp;<span>Telefón</span></li>
+                <li><strong>Adresa:</strong>&nbsp;<span>Košice</span></li>
               </ul>
+              <div style="display: flex; gap: 18px; margin-top: 20px;">
+                <a href="https://instagram.com/hitaes3dstudio" target="_blank" class="social-link" title="Instagram">
+                  <svg viewBox="0 0 24 24" class="social-icon"><rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17" cy="7" r="1.2" fill="currentColor"/></svg>
+                </a>
+                <a href="https://www.tiktok.com/@hitaes3dstudio" target="_blank" class="social-link" title="TikTok">
+                  <svg viewBox="0 0 24 24" class="social-icon"><path d="M9 12a4 4 0 1 0 4 4V4h5a4 4 0 0 0-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
             </div>
           </div>
-
-          <div class="contact-form-wrap">
-            <form id="contactForm" action="https://formspree.io/f/xlgooney" method="POST" class="contact-form">
-              <div class="form-grid">
-                <div class="form-group">
-                  <label for="name">Meno</label>
-                  <input type="text" id="name" name="Meno" placeholder="Tvoje meno" required>
-                </div>
-
-                <div class="form-group">
-                  <label for="email">E-mail</label>
-                  <input type="email" id="email" name="Email" placeholder="tvojmail@gmail.com" required>
-                </div>
-
-                <div class="form-group">
-                  <label for="service">Čo potrebuješ?</label>
-                  <select id="service" name="Služba" required>
-                    <option value="">Vyber možnosť</option>
-                    <option>Len 3D tlač</option>
-                    <option>3D tlač + základný náter</option>
-                    <option>3D tlač + základný náter + maľovanie</option>
-                    <option>Individuálna dohoda</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="message">Poznámka</label>
-                <p class="small-note" style="margin-bottom: 8px;">Máš 3D model? Nahraj ho na <a
-                    href="https://wetransfer.com/" target="_blank"
-                    style="color:var(--accent); text-decoration: underline;">WeTransfer</a> / <a
-                    href="https://drive.google.com/" target="_blank"
-                    style="color:var(--accent); text-decoration: underline;">Google Drive</a> a odkaz vlož sem do
-                  poznámky.</p>
-                <textarea id="message" name="Poznámka" rows="3"
-                  placeholder="Veľkosť, účel, termín, špeciálne požiadavky..."></textarea>
-              </div>
-
-              <button type="submit" id="submitBtn" class="btn btn-primary">Poslať dopyt</button>
-              <div id="formStatus" class="form-status"></div>
-            </form>
-          </div>
+          <form id="contactForm" action="https://formspree.io/f/xlgooney" method="POST" class="contact-form">
+            <div class="form-grid">
+              <div class="form-group"><label>Meno</label><input type="text" name="Meno" required></div>
+              <div class="form-group"><label>E-mail</label><input type="email" name="Email" required></div>
+            </div>
+            <div class="form-group">
+              <label>Čo potrebuješ?</label>
+              <select name="Služba" required>
+                <option value="">Vyber možnosť</option>
+                <option>Len 3D tlač</option>
+                <option>3D tlač + základ</option>
+                <option>Komplet (tlač + maľba)</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Poznámka / Odkaz na model</label>
+              <textarea name="Poznámka" rows="3"></textarea>
+            </div>
+            <button type="submit" id="submitBtn" class="btn btn-primary">Poslať dopyt</button>
+            <div id="formStatus" class="form-status"></div>
+          </form>
         </div>
       </div>
     </section>
 
+    <!-- STATUS NOTICE (Coming Soon) -->
     <div class="container">
-      <div class="launch-notice" id="oznam" style="margin-top: 50px;">
+      <div class="launch-notice" id="oznam">
         <div class="launch-notice-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <div class="launch-notice-content">
-          <p><strong>Momentálne pripravujeme spustenie štúdia a dolaďujeme stroje.</strong><br>
-            Ak máš záujem o tlač, nechaj nám tu model a kontakt, a ozveme sa ti s exkluzívnou cenou hneď, ako oficiálne
-            otvoríme.</p>
+          <p><strong>Momentálne dolaďujeme stroje a pripravujeme otvorenie.</strong><br>
+          Pošli nám dopyt teraz a získaš exkluzívnu zavádzaciu cenu hneď po spustení!</p>
         </div>
       </div>
     </div>
 
+    <!-- Team Section (Cyber Glitch Anonymized) -->
     <section class="team">
       <div class="container">
-        <h2>Tím za vaším projektom</h2>
-
+        <h2>Tím za tvojím projektom</h2>
         <div class="team-grid">
+          <!-- Hitaes -->
           <div class="team-card">
             <div class="team-person">
               <div class="team-photo-wrap">
                 <img src="mgc.png" alt="Hitaes" class="team-photo">
               </div>
-
               <div class="team-info">
                 <h3 data-text="Hitaes">Hitaes<span class="identity">SLA Expert</span></h3>
-                <p class="team-role">SLA / MSLA Expert, maľovanie a post-process</p>
-                <p class="team-desc">
-                  Venujem sa detailnej resin tlači, čisteniu modelov a príprave na maľovanie.
-                  Zameriavam sa hlavne na figúrky, busty a zberateľské kusy, kde rozhodujú detaily,
-                  čistý povrch a celkový výsledný dojem.
-                </p>
+                <p class="team-role">SLA Expert, maľovanie a post-process</p>
+                <p class="team-desc">Špecialista na detailnú resin tlač a umelecké sfarbenie modelov.</p>
               </div>
             </div>
           </div>
-
+          <!-- Miso -->
           <div class="team-card">
             <div class="team-person">
               <div class="team-photo-wrap">
                 <img src="mhc.png" alt="Miso" class="team-photo">
               </div>
-
               <div class="team-info">
                 <h3 data-text="Miso">Miso<span class="identity">FDM Expert</span></h3>
-                <p class="team-role">FDM Expert, 3D modelovanie a web design</p>
-                <p class="team-desc">
-                  Mám za sebou 25 rokov skúseností v 3D aj 2D grafike.
-                  Zameriavam sa na funkčné riešenia, presnosť a praktické využitie výsledného modelu.
-                  Popri tom sa venujem aj tvorbe webových stránok a technickej realizácii projektov.
-                </p>
+                <p class="team-role">FDM Expert, 3D modelovanie</p>
+                <p class="team-desc">Odborník na funkčnú 3D tlač a technickú prípravu modelov.</p>
               </div>
             </div>
           </div>
@@ -1844,60 +934,14 @@
       </div>
     </section>
 
+    <!-- Reviews Section (CSS Hidden) -->
     <section id="recenzie">
-      <div class="container">
-        <div class="section-title">
-          <h2>Čo o nás hovoria klienti</h2>
-          <p>Vaša spokojnosť je našou najväčšou odmenou.</p>
-        </div>
-
-        <div class="reviews-container">
-          <div class="reviews-slider" id="reviewsSlider">
-
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"I sent over a draft of my custom avatar and went for the full painting service.
-                The result is an amazing 32cm figure. Truly outstanding quality, highly recommended!"</p>
-              <div class="review-author">Sam G.</div>
-            </div>
-
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Rýchle dodanie a férová cena, základný náter krásne vytiahol detaily. Post-process
-                bol urobený tak poctivo, že stačilo model len vybaliť a položiť na poličku."</p>
-              <div class="review-author">Peter S.</div>
-            </div>
-
-            <div class="review-card">
-              <div class="review-stars">★★★★☆</div>
-              <p class="review-text">"Hollow Knight: Super kvalita a maľovanie, síce trochu drahšie, ale výsledok stojí
-                za každé euro. Rozhodne odporúčam pre náročnejších."</p>
-              <div class="review-author">Igor H.</div>
-            </div>
-
-            <div class="review-card">
-              <div class="review-stars">★★★★☆</div>
-              <p class="review-text">"Vygeneroval som si vlastný AI model, v Hitaes Studio mi ho vytlačili precízne a
-                základný náter to vylepšil. Ďakujem!"</p>
-              <div class="review-author">Marek T.</div>
-            </div>
-
-            <div class="review-card">
-              <div class="review-stars">★★★★☆</div>
-              <p class="review-text">"Dala som si spraviť 3d model podľa referencie + základné maľovanie, na svadobnej
-                torte to vyzeralo super i keď dodanie trvalo dlhšie"</p>
-              <div class="review-author">Lucia M.</div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
+      <div class="container"><h2>Recenzie</h2></div>
     </section>
-
 
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container footer-inner">
       <div>© 2026 Hitaes Studio</div>
@@ -1906,100 +950,13 @@
   </footer>
 
   <script>
-    document.querySelectorAll('.gallery-item').forEach(item => {
-      item.addEventListener('mousemove', e => {
-        const rect = item.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width * 100;
-        const y = (e.clientY - rect.top) / rect.height * 100;
-
-        const img = item.querySelector('img');
-        if (img) {
-          img.style.transformOrigin = `${x}% ${y}%`;
-        }
-      });
-    });
-  </script>
-
-  <script>
+    // Machine Slider Loop
     const machineTrack = document.querySelector('.machines-track');
-
     if (machineTrack && window.innerWidth > 768) {
       machineTrack.innerHTML += machineTrack.innerHTML;
     }
 
-    // Reviews Slider Drag & Loop functionality
-    const slider = document.getElementById('reviewsSlider');
-
-    // Triple the content for infinite effect
-    if (slider) {
-      const originalContent = slider.innerHTML;
-      slider.innerHTML = originalContent + originalContent + originalContent;
-
-      // Start in the middle
-      window.addEventListener('load', () => {
-        slider.scrollLeft = slider.scrollWidth / 3;
-      });
-    }
-
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    slider.addEventListener('mousedown', (e) => {
-      isDown = true;
-      slider.classList.add('active');
-      slider.style.scrollBehavior = 'auto'; // Disable smooth scroll during drag
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
-    slider.addEventListener('mouseleave', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
-    slider.addEventListener('mouseup', () => {
-      isDown = false;
-      slider.classList.remove('active');
-    });
-    slider.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 2; //scroll-fast
-      slider.scrollLeft = scrollLeft - walk;
-    });
-
-    // Infinite Loop & Smooth check
-    slider.addEventListener('scroll', () => {
-      const oneThird = slider.scrollWidth / 3;
-
-      // Infinite Loop Logic (No transition during jump)
-      if (slider.scrollLeft >= oneThird * 2) {
-        const currentBehavior = slider.style.scrollBehavior;
-        slider.style.scrollBehavior = 'auto';
-        slider.scrollLeft -= oneThird;
-        slider.style.scrollBehavior = currentBehavior;
-      } else if (slider.scrollLeft <= 5) {
-        const currentBehavior = slider.style.scrollBehavior;
-        slider.style.scrollBehavior = 'auto';
-        slider.scrollLeft += oneThird;
-        slider.style.scrollBehavior = currentBehavior;
-      }
-
-      // Restore smooth scroll after manual interaction
-      if (!isDown) {
-        clearTimeout(slider.scrollTimeout);
-        slider.scrollTimeout = setTimeout(() => {
-          slider.style.scrollBehavior = 'smooth';
-        }, 150);
-      }
-    });
-
-    // Handle Resize
-    window.addEventListener('resize', () => {
-      slider.scrollLeft = slider.scrollWidth / 3;
-    });
-
-    // AJAX Form Submission
+    // AJAX Form Handling
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
@@ -2007,46 +964,32 @@
     if (contactForm) {
       contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-
-        // UI Loading State
         submitBtn.disabled = true;
         submitBtn.innerText = 'Odosiela sa...';
-        contactForm.classList.add('form-loading');
-
-        const formData = new FormData(contactForm);
-
+        
         try {
           const response = await fetch(contactForm.action, {
             method: 'POST',
-            body: formData,
-            headers: {
-              'Accept': 'application/json'
-            }
+            body: new FormData(contactForm),
+            headers: { 'Accept': 'application/json' }
           });
-
           if (response.ok) {
-            formStatus.textContent = 'Dopyt úspešne odoslaný! ďakujeme !';
+            formStatus.textContent = 'Dopyt úspešne odoslaný! Ozveme sa čoskoro.';
             formStatus.className = 'form-status success';
             contactForm.reset();
-            submitBtn.style.display = 'none'; // Hide button after success
+            submitBtn.style.display = 'none';
           } else {
-            const data = await response.json();
-            formStatus.textContent = data.errors ? data.errors.map(error => error.message).join(', ') : 'Ups! Niečo sa nepodarilo. Skúste to prosím neskôr.';
+            formStatus.textContent = 'Ups! Skúste to znova neskôr.';
             formStatus.className = 'form-status error';
           }
-        } catch (error) {
-          formStatus.textContent = 'Chyba siete. Skontrolujte prosím pripojenie.';
+        } catch (err) {
+          formStatus.textContent = 'Chyba spojenia.';
           formStatus.className = 'form-status error';
         } finally {
           submitBtn.disabled = false;
-          if (formStatus.className !== 'form-status success') {
-            submitBtn.innerText = 'Poslať dopyt';
-          }
-          contactForm.classList.remove('form-loading');
         }
       });
     }
   </script>
 </body>
-
 </html>
