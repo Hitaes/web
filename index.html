@@ -951,13 +951,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      color: var(--accent-2);
+      color: var(--text); /* Match the main text color */
+      font-weight: 800;
+      text-transform: uppercase;
       opacity: 0;
       z-index: 2;
       animation: identity-reveal 6s infinite;
       pointer-events: none;
-      filter: blur(1px);
-      /* Slight blur even when flickering */
+      filter: blur(0.5px); /* Sharper, cleaner flicker */
     }
 
     @keyframes identity-reveal {
