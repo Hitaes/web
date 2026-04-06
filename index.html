@@ -1025,6 +1025,66 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
+      background: var(--bg);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* Photo Glitch Layers */
+    .team-photo-wrap::before,
+    .team-photo-wrap::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: inherit;
+      background-size: cover;
+      background-position: center top;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* Target the specific images as backgrounds for the glitch */
+    .team-card:nth-child(1) .team-photo-wrap::before,
+    .team-card:nth-child(1) .team-photo-wrap::after {
+      background-image: url('mgc.png');
+    }
+
+    .team-card:nth-child(2) .team-photo-wrap::before,
+    .team-card:nth-child(2) .team-photo-wrap::after {
+      background-image: url('mhc.png');
+    }
+
+    .team-card:hover .team-photo-wrap::before {
+      animation: photo-glitch-1 0.4s infinite;
+      opacity: 0.6;
+      mix-blend-mode: color-dodge;
+    }
+
+    .team-card:hover .team-photo-wrap::after {
+      animation: photo-glitch-2 0.3s infinite;
+      opacity: 0.6;
+      mix-blend-mode: color-burn;
+    }
+
+    @keyframes photo-glitch-1 {
+      0% { clip-path: inset(10% 0 30% 0); transform: translate(-5px); }
+      20% { clip-path: inset(50% 0 10% 0); transform: translate(5px); }
+      40% { clip-path: inset(80% 0 0 0); transform: translate(-3px); }
+      60% { clip-path: inset(0 0 80% 0); transform: translate(3px); }
+      80% { clip-path: inset(30% 0 50% 0); transform: translate(-5px); }
+      100% { clip-path: inset(10% 0 30% 0); transform: translate(0); }
+    }
+
+    @keyframes photo-glitch-2 {
+      0% { clip-path: inset(20% 0 40% 0); transform: translate(5px); }
+      25% { clip-path: inset(0 0 70% 0); transform: translate(-5px); }
+      50% { clip-path: inset(60% 0 10% 0); transform: translate(3px); }
+      75% { clip-path: inset(40% 0 20% 0); transform: translate(-3px); }
+      100% { clip-path: inset(20% 0 40% 0); transform: translate(0); }
     }
 
     .team-photo {
