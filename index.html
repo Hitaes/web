@@ -946,12 +946,23 @@
     }
 
     .team-photo-wrap {
-      width: 120px;
+      width: 150px;
       height: 150px;
       position: relative;
-      border-radius: 12px;
+      border-radius: 28px; /* Squircle look */
       overflow: hidden;
       flex-shrink: 0;
+      border: 2px solid rgba(240, 196, 107, 0.1);
+      padding: 0;
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .team-photo-wrap:hover {
+      transform: scale(1.05) translateY(-5px);
+      border-color: rgba(240, 196, 107, 0.4);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 15px rgba(240, 196, 107, 0.15);
     }
 
     .team-photo {
@@ -960,7 +971,11 @@
       object-fit: cover;
       object-position: center top;
       display: block;
-      transition: transform 0.3s ease;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .team-photo-wrap:hover .team-photo {
+      transform: scale(1.1);
     }
 
 
