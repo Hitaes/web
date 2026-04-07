@@ -908,167 +908,12 @@
       font-size: clamp(1.7rem, 3vw, 2.6rem);
     }
 
-    /* High-Energy Digital Decode Flicker */
+    /* Clean Professional Team Headers */
     .team-info h3 {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-weight: 800;
-      color: var(--text);
-      position: relative;
-      display: inline-block;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
+      color: #fff;
       margin-bottom: 8px;
-      animation: main-flicker 4s infinite;
-    }
-
-    .team-info h3::before,
-    .team-info h3::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.8;
-    }
-
-    .team-info h3::before {
-      color: #00fff9;
-      z-index: -1;
-      animation: glitch-flicker-1 0.4s infinite;
-    }
-
-    .team-info h3::after {
-      color: #ff00c1;
-      z-index: -2;
-      animation: glitch-flicker-2 0.3s infinite;
-    }
-
-    /* Secret Real Name Layer (Identity Flicker) */
-    .team-info h3 .identity {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      color: var(--text);
-      font-weight: 800;
-      text-transform: uppercase;
-      opacity: 0;
-      z-index: 2;
-      animation: identity-reveal 6s infinite;
-      pointer-events: none;
-      filter: blur(0.5px);
-      /* Resetting alignment to allow for a dirty glitch look */
-      left: 6px;
-    }
-
-    .team-card:nth-child(1) .team-info h3 .identity {
-      left: 22px; /* Stronger offset for Hitaes */
-    }
-
-    @keyframes identity-reveal {
-      0%, 48.5%, 50.1%, 100% { 
-        opacity: 0; transform: scale(1) translate(0); 
-      }
-      49%, 50% { 
-        opacity: 0.9; transform: scale(1.05) skew(12deg) translate(2px); 
-      }
-    }
-
-    @keyframes main-flicker {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: skew(0);
-      }
-
-      1% {
-        opacity: 0.4;
-        transform: skew(2deg);
-      }
-
-      2% {
-        opacity: 1;
-        transform: skew(0);
-      }
-
-      30% {
-        transform: skew(0);
-      }
-
-      31% {
-        transform: skew(-5deg) scaleY(1.1);
-      }
-
-      32% {
-        transform: skew(0);
-      }
-
-      80% {
-        opacity: 1;
-      }
-
-      81% {
-        opacity: 0;
-      }
-
-      82% {
-        opacity: 1;
-      }
-    }
-
-    @keyframes glitch-flicker-1 {
-      0% {
-        transform: translate(0);
-        clip-path: inset(0 0 0 0);
-      }
-
-      25% {
-        transform: translate(-3px, 2px);
-        clip-path: inset(10% 0 40% 0);
-      }
-
-      50% {
-        transform: translate(3px, -2px);
-        clip-path: inset(50% 0 10% 0);
-      }
-
-      75% {
-        transform: translate(-2px, -2px);
-        clip-path: inset(80% 0 0 0);
-      }
-
-      100% {
-        transform: translate(0);
-      }
-    }
-
-    @keyframes glitch-flicker-2 {
-      0% {
-        transform: translate(0);
-        clip-path: inset(0 0 0 0);
-      }
-
-      20% {
-        transform: translate(3px, -2px);
-        clip-path: inset(20% 0 60% 0);
-      }
-
-      40% {
-        transform: translate(-3px, 2px);
-        clip-path: inset(70% 0 5% 0);
-      }
-
-      60% {
-        transform: translate(2px, 2px);
-        clip-path: inset(0 0 80% 0);
-      }
-
-      100% {
-        transform: translate(0);
-      }
     }
 
     .team-grid {
@@ -1115,26 +960,10 @@
       object-fit: cover;
       object-position: center top;
       display: block;
-      filter: grayscale(0.6) blur(1.5px) contrast(1.2); /* Anonymizing filter */
-      transition: filter 0.3s ease;
+      transition: transform 0.3s ease;
     }
 
-    .team-photo-wrap::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyAQMAAAAk8RryAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP/AOW3MEoAAAAQSURBVAjXY2hgYGBgYGCgAQAEEQB99m89LwAAAABJRU5ErkJggg=='); /* Tiny noise pattern */
-      opacity: 0.15;
-      pointer-events: none;
-      z-index: 2;
-    }
 
-    .team-card:hover .team-photo {
-      filter: grayscale(0.2) blur(0px) contrast(1.1); /* Slightly cleaner on hover but still protected */
-    }
 
     .team-info {
       display: flex;
@@ -1793,7 +1622,8 @@
         </div>
         <div class="launch-notice-content">
           <p><strong>Momentálne pripravujeme spustenie štúdia.</strong><br>
-            Svoje modely nám však môžeš posielať už teraz! Obratom ti ich bezplatne naceníme a preberieme ďalší postup, aby sa na tvojom projekte mohlo začať pracovať čo najskôr.</p>
+            Svoje modely nám však môžeš posielať už teraz! Obratom ti ich bezplatne naceníme a preberieme ďalší postup,
+            aby sa na tvojom projekte mohlo začať pracovať čo najskôr.</p>
         </div>
       </div>
     </div>
@@ -1806,11 +1636,11 @@
           <div class="team-card">
             <div class="team-person">
               <div class="team-photo-wrap">
-                <img src="mgc.png" alt="Hitaes" class="team-photo">
+                <img src="mg.png" alt="Michal G." class="team-photo">
               </div>
 
               <div class="team-info">
-                <h3 data-text="Hitaes">Hitaes<span class="identity">ERROR</span></h3>
+                <h3>Michal G.</h3>
                 <p class="team-role">SLA / MSLA Expert, maľovanie a post-process</p>
                 <p class="team-desc">
                   Venujem sa detailnej resin tlači, čisteniu modelov a príprave na maľovanie.
@@ -1824,11 +1654,11 @@
           <div class="team-card">
             <div class="team-person">
               <div class="team-photo-wrap">
-                <img src="mhc.png" alt="Miso" class="team-photo">
+                <img src="mh.png" alt="Michal H." class="team-photo">
               </div>
 
               <div class="team-info">
-                <h3 data-text="Miso">Miso<span class="identity">ERROR</span></h3>
+                <h3>Michal H.</h3>
                 <p class="team-role">FDM Expert, 3D modelovanie a web design</p>
                 <p class="team-desc">
                   Mám za sebou 25 rokov skúseností v 3D aj 2D grafike.
