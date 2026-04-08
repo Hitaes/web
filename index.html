@@ -452,7 +452,7 @@
                   placeholder="Veľkosť, účel, termín, špeciálne požiadavky..."></textarea>
               </div>
 
-              <button type="submit" id="submitBtn" class="btn btn-primary">Pripraviť e-mail</button>
+              <button type="submit" id="submitBtn" class="btn btn-primary">Poslať Dopyt</button>
               <div id="formStatus" class="form-status"></div>
             </form>
           </div>
@@ -683,21 +683,21 @@
     if (contactForm) {
       contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
+
         const formData = new FormData(contactForm);
         const name = formData.get('Meno');
         const email = formData.get('Email');
-        const service = formData.get('Slub\u017Eba'); // Sluzba
-        const message = formData.get('Pozn\u00E1mka'); // Poznamka
-        
+        const service = formData.get('Slu\u017Eba'); 
+        const message = formData.get('Pozn\u00E1mka'); 
+
         const mailBody = `Meno: ${name}\nE-mail: ${email}\nSlu\u017Eba: ${service}\n\nPozn\u00E1mka:\n${message}`;
         const mailtoLink = `mailto:info@hitaesstudio.sk?subject=Dopyt z webu - ${encodeURIComponent(service)}&body=${encodeURIComponent(mailBody)}`;
-        
+
         window.location.href = mailtoLink;
-        
-        formStatus.textContent = 'Otv\u00E1ram e-mailov\u00E9ho klienta...';
+
+        formStatus.innerHTML = 'Otv\u00E1ram e-mailov\u00E9ho klienta...<br><small style="opacity:0.6">Ak sa ni\u010D nedeje, nap\u00ED\u0161 n\u00E1m na: info@hitaesstudio.sk</small>';
         formStatus.className = 'form-status success';
-        
+
         setTimeout(() => {
           formStatus.textContent = '';
           formStatus.className = 'form-status';
