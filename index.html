@@ -60,7 +60,7 @@
 
         <div class="hero-card">
           <div class="hero-image">
-            <img src="images/prev.png" alt="3D tlač modelu">
+            <img src="images/prev.webp" alt="3D tlač modelu">
           </div>
         </div>
       </div>
@@ -135,12 +135,12 @@
         </div>
 
         <div class="gallery">
-          <div class="gallery-item"><img src="images/busta.png" alt="3D tlač modelu" loading="lazy"></div>
-          <div class="gallery-item"><img src="images/mman.jpg" alt="3D tlač modelu" loading="lazy"></div>
-          <div class="gallery-item"><img src="images/teren.png" alt="3D tlač modelu" loading="lazy"></div>
-          <div class="gallery-item"><img src="images/trench.png" alt="3D tlač modelu" loading="lazy"></div>
-          <div class="gallery-item"><img src="images/hollowknight.png" alt="3D tlač modelu" loading="lazy"></div>
-          <div class="gallery-item"><img src="images/hinata.png" alt="3D tlač modelu" loading="lazy"></div>
+          <div class="gallery-item"><img src="images/busta.webp" alt="3D tlač modelu" loading="lazy"></div>
+          <div class="gallery-item"><img src="images/mman.webp" alt="3D tlač modelu" loading="lazy"></div>
+          <div class="gallery-item"><img src="images/teren.webp" alt="3D tlač modelu" loading="lazy"></div>
+          <div class="gallery-item"><img src="images/trench.webp" alt="3D tlač modelu" loading="lazy"></div>
+          <div class="gallery-item"><img src="images/hollowknight.webp" alt="3D tlač modelu" loading="lazy"></div>
+          <div class="gallery-item"><img src="images/hinata.webp" alt="3D tlač modelu" loading="lazy"></div>
         </div>
       </div>
     </section>
@@ -361,7 +361,7 @@
           </div>
 
           <div class="model-help-image">
-            <img src="images/banner2.png" alt="3D tlač modelu">
+            <img src="images/banner2.webp" alt="3D tlač modelu">
           </div>
         </div>
       </div>
@@ -485,7 +485,7 @@
           <div class="team-card">
             <div class="team-person">
               <div class="team-photo-wrap">
-                <img src="images/mg.png" alt="Michal G." class="team-photo" id="photo-mg">
+                <img src="images/mg.webp" alt="Michal G." class="team-photo" id="photo-mg">
               </div>
 
               <div class="team-info">
@@ -503,7 +503,7 @@
           <div class="team-card">
             <div class="team-person">
               <div class="team-photo-wrap">
-                <img src="images/mh.png" alt="Michal H." class="team-photo">
+                <img src="images/mh.webp" alt="Michal H." class="team-photo">
               </div>
 
               <div class="team-info">
@@ -676,32 +676,47 @@
       slider.scrollLeft = slider.scrollWidth / 3;
     });
 
-    // Handle Form to Email
+    // Handle Form to PHP (Websupport)
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
 
     if (contactForm) {
-      contactForm.addEventListener('submit', (e) => {
+      contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Odosiela sa...';
+        formStatus.textContent = '';
+
         const formData = new FormData(contactForm);
-        const name = formData.get('Meno');
-        const email = formData.get('Email');
-        const service = formData.get('Slu\u017Eba'); 
-        const message = formData.get('Pozn\u00E1mka'); 
 
-        const mailBody = `Meno: ${name}\nE-mail: ${email}\nSlu\u017Eba: ${service}\n\nPozn\u00E1mka:\n${message}`;
-        const mailtoLink = `mailto:info@hitaesstudio.sk?subject=Dopyt z webu - ${encodeURIComponent(service)}&body=${encodeURIComponent(mailBody)}`;
+        try {
+          const response = await fetch('send_email.php', {
+            method: 'POST',
+            body: formData
+          });
 
-        window.location.href = mailtoLink;
+          const result = await response.text();
 
-        formStatus.innerHTML = 'Otv\u00E1ram e-mailov\u00E9ho klienta...<br><small style="opacity:0.6">Ak sa ni\u010D nedeje, nap\u00ED\u0161 n\u00E1m na: info@hitaesstudio.sk</small>';
-        formStatus.className = 'form-status success';
-
-        setTimeout(() => {
-          formStatus.textContent = '';
-          formStatus.className = 'form-status';
-        }, 5000);
+          if (response.ok) {
+            formStatus.textContent = 'Dopyt úspešne odoslaný!';
+            formStatus.className = 'form-status success';
+            contactForm.reset();
+            submitBtn.style.display = 'none';
+          } else {
+            formStatus.textContent = result || 'Chyba pri odosielaní.';
+            formStatus.className = 'form-status error';
+          }
+        } catch (error) {
+          formStatus.textContent = 'Chyba servera. Skontrolujte pripojenie.';
+          formStatus.className = 'form-status error';
+        } finally {
+          submitBtn.disabled = false;
+          if (formStatus.className !== 'form-status success') {
+            submitBtn.innerText = 'Poslať Dopyt';
+          }
+        }
       });
     }
   </script>
