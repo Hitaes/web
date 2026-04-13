@@ -44,6 +44,13 @@ a {
 img {
   max-width: 100%;
   display: block;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  user-select: none;
+  pointer-events: none;
 }
 
 .container {
@@ -180,7 +187,7 @@ img {
 }
 
 .hero {
-  padding: 40px 0 48px;
+  padding: 20px 0 48px;
 }
 
 .hero-grid {
@@ -240,7 +247,7 @@ img {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 24px;
-  padding: 18px;
+  padding: 15px;
   box-shadow: var(--shadow);
 }
 
@@ -248,10 +255,15 @@ img {
   aspect-ratio: 4 / 5;
   border-radius: 18px;
   overflow: hidden;
-  background: linear-gradient(145deg, #1a1f27, #101318);
   display: grid;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  position: relative;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .hero-proof {
@@ -363,6 +375,19 @@ section {
   border-radius: 16px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative; /* Pridané pre štít */
+}
+
+/* Neviditeľný štít nad obrázkami - agresívna metóda */
+.gallery-item::after, .hero-image::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 }
 
 .gallery-item:hover {
@@ -378,6 +403,7 @@ section {
   border-radius: 12px;
   transform: scale(1);
   transition: transform 0.4s ease, transform-origin 0.4s ease;
+  pointer-events: none; /* Obrázok je pre myš neviditeľný */
 }
 
 .gallery-item:nth-child(2) img {
@@ -474,6 +500,8 @@ section {
   font-size: 0.95rem;
   margin-top: 14px;
 }
+
+
 
 .contact-box {
   display: grid;
