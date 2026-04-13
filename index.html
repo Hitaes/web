@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hitaes Studio | SLA 3D tlač a maľovanie</title>
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body id="top">
@@ -721,18 +721,7 @@
           }
         }
       });
-    // Prevent image downloading
-    document.addEventListener('contextmenu', function(e) {
-      if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-      }
-    }, false);
-
-    document.addEventListener('dragstart', function(e) {
-      if (e.target.tagName === 'IMG') {
-        e.preventDefault();
-      }
-    }, false);
+    }
   </script>
 </body>
 
